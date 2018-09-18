@@ -44,10 +44,16 @@ export default {
           })
           break
         case 'info':
-          this.$router.push({})
+          this.$router.push({
+            path: '/info',
+            name: 'TheInfo'
+          })
           break
         case 'cart':
-          this.$router.push({})
+          this.$router.push({
+            path: '/cart',
+            name: 'TheCart'
+          })
           break
         case 'my':
           this.$router.push({

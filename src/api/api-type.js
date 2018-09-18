@@ -2,6 +2,8 @@
 export const BASE_URL = 'http://mjwhqt.hjw988.com'// base url
 
 /* ************** 前台接口 ***************/
+
+export const GET_RULES = BASE_URL + '/api/getAllRules' // =获取权限
 export const LOGIN = BASE_URL + '/api/login' // 登录接口
 export const GOODS_LIST = BASE_URL + '/api/goods/list' // 商品列表
 export const GOODS_DETAIL = BASE_URL + '/api/goods/detail'// 商品详情页
