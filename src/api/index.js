@@ -2,7 +2,7 @@
 import Vue from 'vue'
 import axios from 'axios'
 import router from '../router'
-
+// import qs from 'qs'
 // 请求错误处理 注意根据具体的服务器端设置，此处仅仅是个示例
 const errorFn = err => {
   console.log(err.toString())
@@ -72,23 +72,19 @@ const $axios = axios.create({
 })
 $axios.interceptors.request.use(
   config => {
-    console.log(111111)
-    console.log(process.env.NODE_ENV)
-    console.log(222)
+    // if (config.method === 'post') {
+    //   config.data = qs.stringify(config.data)
+    // }
     if (process.env.NODE_ENV === 'development') {
       // 这里一个token，你需要在这里取到你设置好的token的值
-      const token = localStorage['X-LONGCHAT-Token']
-      // const token = 'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmMzFmMmQwOTRiMTU0ZDljYWI3OTBkOGYxYTJiZmVjZCIsImlzcyI6ImRyYWdvbmxldHRlci1jbGktZ2F0d2F5Iiwic3ViIjoie1widXNlck5hbWVcIjpcIndhbmdmYWppblwifSIsImlhdCI6MTUzNjgyNzIyNywiZXhwIjoxNTY4MzYzMjI3fQ.0d93SVuTYW-QzyGxgAY4zAY_WucppnDSxmIzXnip52M'
-      if (token) {
-        // 这里将token设置到headers中，header的key是Authorization，这个key值根据你的需要进行修改即可
-        config.headers = {
-          'X-LONGCHAT-Token': token,
-          // 'X-LONGCHAT-OaToken': localStorage['X-LONGCHAT-OaToken'],
-          // 'X-LONGCHAT-SsoToken': localStorage['X-LONGCHAT-SsoToken'],
-          // 'X-LONGCHAT-RefreshToken': localStorage['X-LONGCHAT-OaToken'],
-          'User-Agent': navigator.userAgent
-        }
-      }
+      // const token = localStorage['X-LONGCHAT-Token']
+      // if (token) {
+      //   // 这里将token设置到headers中，header的key是Authorization，这个key值根据你的需要进行修改即可
+      //   config.headers = {
+      //     'X-LONGCHAT-Token': token,
+      //     'User-Agent': navigator.userAgent
+      //   }
+      // }
     }
     return config
   },

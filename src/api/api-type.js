@@ -25,13 +25,3 @@ export const CART_LIST = BASE_URL + '/api/cart/list'// 购物车列表的接口
 export const CART_DELETE = BASE_URL + '/api/cart/delete'// 删除购物车的接口
 export const CART_DETAIL = BASE_URL + '/api/cart/detail'// 结算购物车的接口
 export const USER_DETAIL = BASE_URL + '/api/user/detail'// 用户详情的接口
-// new
-export const HISTORY = BASE_URL + 'appmanage/history'// 历史版本记录
-export const APPDETAIL = BASE_URL + 'appplat/apps'// 应用详情
-export const USERSCORES = BASE_URL + 'appplat/userScores'// 用户当前评论评分
-export const SCORES = BASE_URL + 'appplat/scores'// 评论评分
-export const SCORELIST = BASE_URL + 'appplat/scoreList'// 评论列表
-export const TONGJI = BASE_URL + 'appplat/pcAppDescribe'// 应用得分统计
-
-/* ************** service2 ***************/
-export const SCHEDULE = 'https://moapproval.longfor.com:39650/schedule/findScheduleNew.do'// 日程列表

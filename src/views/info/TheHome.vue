@@ -50,7 +50,8 @@
 
 <script>
 import TheFooter from '../../components/TheFooter'
-import {INFO_LIST, LOGIN} from '@/api/api-type'
+import { CONTACT } from '@/api/api-type'
+
 export default {
   name: 'TheInfo',
   components: {
@@ -59,22 +60,24 @@ export default {
   data() {
     return {
       navType: 'handpick', // 顶部导航分类
-      url: INFO_LIST,
       selected: 1
     }
   },
-  created () {
-    // this.initData()
-    this.$axios.post(LOGIN).then(res => {
-      console.log(res)
-    })
+  mounted () {
+    // this.$axios.post(LOGIN).then(res => {
+    //   console.log(res)
+    // })
+    this.initData()
   },
   methods: {
     // 初始化页面数据
     initData () {
-      this.$axios.post(this.url, {type: 1}).then(res => {
-        console.log(res)
-      })
+      let self = this
+      // this.$axios(this.url, {type: 1}).then(res => {
+      self.$axios.post(CONTACT, this.qs.stringify({mobile: '18310413634', content: '1'}))
+        .then(res => {
+          console.log(res)
+        })
     },
     handpick() {
       this.navType = 'handpick'
