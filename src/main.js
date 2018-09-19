@@ -6,10 +6,9 @@ import router from './router'
 import store from './store/index'
 // 引入公共接口
 import './api'
-import Mint from 'mint-ui'
-import 'mint-ui/lib/style.css'
-import './assets/iconfont/iconfont.css'
-Vue.use(Mint)
+import Vant from 'vant'
+import 'vant/lib/vant-css/index.css'
+Vue.use(Vant)
 
 Vue.config.productionTip = false
 

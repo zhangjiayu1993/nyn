@@ -1,13 +1,21 @@
 <template>
 <div class="wraper">
   <!--banner-->
-  <mt-swipe :auto="4000" class="banner">
-    <mt-swipe-item>
+  <!--<mt-swipe :auto="4000" class="banner">-->
+    <!--<mt-swipe-item>-->
+      <!--<img src="./images/banner.jpg">-->
+    <!--</mt-swipe-item>-->
+    <!--<mt-swipe-item>2</mt-swipe-item>-->
+    <!--<mt-swipe-item>3</mt-swipe-item>-->
+  <!--</mt-swipe>-->
+  <van-swipe :autoplay="3000" class="banner">
+    <van-swipe-item>
       <img src="./images/banner.jpg">
-    </mt-swipe-item>
-    <mt-swipe-item>2</mt-swipe-item>
-    <mt-swipe-item>3</mt-swipe-item>
-  </mt-swipe>
+    </van-swipe-item>
+    <van-swipe-item>2</van-swipe-item>
+    <van-swipe-item>3</van-swipe-item>
+    <van-swipe-item>4</van-swipe-item>
+  </van-swipe>
   <!--公司介绍-->
   <div class="gsjs">
     <img src="./images/index_02.jpg" class="image"/>
@@ -15,6 +23,22 @@
     <img src="./images/index_04.jpg" class="image"/>
     <img src="./images/index_05.jpg" class="image"/>
   </div>
+  <i class="iconfont icon-liulan" style="font-size: 100px"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
+  <i class="iconfont icon-liulan"></i>
   <!--页脚-->
   <TheFooter :selected="selected"></TheFooter>
 </div>
@@ -27,7 +51,7 @@ export default {
   components: {TheFooter},
   data() {
     return {
-      selected: 'home'
+      selected: 0
     }
   }
 }

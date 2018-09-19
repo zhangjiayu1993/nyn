@@ -11,7 +11,7 @@ export default {
   components: {TheFooter},
   data() {
     return {
-      selected: 'cart'
+      selected: 2
     }
   }
 }

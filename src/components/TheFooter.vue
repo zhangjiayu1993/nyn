@@ -1,23 +1,24 @@
 <template>
   <div class="footer">
-    <mt-tabbar v-model="message" fixed>
-      <mt-tab-item id="home">
-        <i slot="icon" class="iconfont icon-home"></i>
-        首页
-      </mt-tab-item>
-      <mt-tab-item id="info">
-        <i slot="icon" class="iconfont icon-info"></i>
-        咨询
-      </mt-tab-item>
-      <mt-tab-item id="cart">
-        <i slot="icon" class="iconfont icon-cart"></i>
-        购物车
-      </mt-tab-item>
-      <mt-tab-item id="my">
-        <i slot="icon" class="iconfont icon-my"></i>
-        我的
-      </mt-tab-item>
-    </mt-tabbar>
+    <van-tabbar v-model="message" fixed>
+      <van-tabbar-item to="/">
+        <span>首页</span>
+        <i slot="icon" slot-scope="props" class="iconfont icon-home"></i>
+      </van-tabbar-item>
+      <van-tabbar-item to="/info">
+        <span>咨询</span>
+        <i slot="icon" slot-scope="props" class="iconfont icon-info"></i>
+      </van-tabbar-item>
+      <van-tabbar-item to="/cart">
+        <span>购物车</span>
+        <i slot="icon" slot-scope="props" class="iconfont icon-cart"></i>
+      </van-tabbar-item>
+      <van-tabbar-item to="/my">
+        <span>我的</span>
+        <span class="iconfont icon-my"></span>
+        <!--<i slot="icon" slot-scope="props" class="iconfont icon-my"></i>-->
+      </van-tabbar-item>
+    </van-tabbar>
   </div>
 </template>
 
@@ -30,39 +31,7 @@ export default {
     }
   },
   props: {
-    selected: String
-  },
-  watch: {
-    message: function (val, oldVal) {
-      // console.log(val)
-      // console.log(oldVal)
-      switch (val) {
-        case 'home':
-          this.$router.push({
-            path: '/',
-            name: 'TheHome'
-          })
-          break
-        case 'info':
-          this.$router.push({
-            path: '/info',
-            name: 'TheInfo'
-          })
-          break
-        case 'cart':
-          this.$router.push({
-            path: '/cart',
-            name: 'TheCart'
-          })
-          break
-        case 'my':
-          this.$router.push({
-            path: '/my',
-            name: 'TheMy'
-          })
-          break
-      }
-    }
+    selected: Number
   }
 }
 </script>

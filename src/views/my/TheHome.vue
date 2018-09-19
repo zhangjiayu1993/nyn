@@ -15,7 +15,7 @@ export default {
   components: {TheFooter},
   data() {
     return {
-      selected: 'my'
+      selected: 3
     }
   }
 }

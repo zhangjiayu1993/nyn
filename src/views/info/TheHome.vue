@@ -4,8 +4,8 @@
       <li @click="handpick()" :class="navType == 'handpick' ? 'active' : ''">精选</li>
       <li @click="all()" :class="navType == 'all' ? 'active' : ''">全部</li>
     </ul>
-    <mt-tab-container v-model="navType">
-      <mt-tab-container-item id="handpick">
+    <van-tabs v-model="navType">
+      <van-tab>
         <keep-alive>
           <div class="item">
             <div class="img-con">
@@ -21,8 +21,8 @@
             </div>
           </div>
         </keep-alive>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="all">
+      </van-tab>
+      <van-tab>
         <keep-alive>
           <div class="item">
             <div class="img-con">
@@ -38,8 +38,10 @@
             </div>
           </div>
         </keep-alive>
-      </mt-tab-container-item>
-    </mt-tab-container>
+      </van-tab>
+      <van-tab>内容 3</van-tab>
+      <van-tab>内容 4</van-tab>
+    </van-tabs>
     <!--详情页-->
     <!--底部导航-->
     <TheFooter :selected="selected"></TheFooter>
@@ -58,7 +60,7 @@ export default {
     return {
       navType: 'handpick', // 顶部导航分类
       url: INFO_LIST,
-      selected: 'info'
+      selected: 1
     }
   },
   created () {
