@@ -15,8 +15,7 @@
       </van-tabbar-item>
       <van-tabbar-item to="/my">
         <span>我的</span>
-        <span class="iconfont icon-my"></span>
-        <!--<i slot="icon" slot-scope="props" class="iconfont icon-my"></i>-->
+        <i slot="icon" slot-scope="props" class="iconfont icon-my"></i>
       </van-tabbar-item>
     </van-tabbar>
   </div>

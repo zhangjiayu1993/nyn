@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import TheIndex from '@/views/index/TheHome'
 import TheMy from '@/views/my/TheHome'
 import TheInfo from '@/views/info/TheHome'
+import InfoDetal from '@/views/info/InfoDetail'
 import TheCart from '@/views/cart/TheHome'
 
 Vue.use(Router)
@@ -29,6 +30,11 @@ export default new Router({
       path: '/cart',
       name: 'TheCart',
       component: TheCart
+    },
+    {
+      path: '/infodetail',
+      name: 'InfoDetal',
+      component: InfoDetal
     }
   ]
 })

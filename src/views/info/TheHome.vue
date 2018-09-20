@@ -4,44 +4,18 @@
       <li @click="handpick()" :class="navType == 'handpick' ? 'active' : ''">精选</li>
       <li @click="all()" :class="navType == 'all' ? 'active' : ''">全部</li>
     </ul>
-    <van-tabs v-model="navType">
-      <van-tab>
+    <ul>
+      <li v-if="navType == 'handpick'">
         <keep-alive>
-          <div class="item">
-            <div class="img-con">
-              <img src="./big-bg.png" alt="">
-            </div>
-            <div class="bottom">
-              <div class="ellipsis title">一支只谈匠心不谈匠人的纯手工线香一支只谈匠心不谈匠人的纯手工线香</div>
-              <div class="scan"><i class="iconfont icon-liulan"></i>871人浏览</div>
-            </div>
-            <div class="date">
-              <span>2018</span>
-              <span>7月2日</span>
-            </div>
-          </div>
+          <InfoList :listData="listData"></InfoList>
         </keep-alive>
-      </van-tab>
-      <van-tab>
+      </li>
+      <li v-else>
         <keep-alive>
-          <div class="item">
-            <div class="img-con">
-              <img src="./big-bg.png" alt="">
-            </div>
-            <div class="bottom">
-              <div class="ellipsis title">alll</div>
-              <div class="scan"><i class="iconfont icon-liulan"></i>871人浏览</div>
-            </div>
-            <div class="date">
-              <span>2018</span>
-              <span>7月2日</span>
-            </div>
-          </div>
+          <InfoList :listData="listData"></InfoList>
         </keep-alive>
-      </van-tab>
-      <van-tab>内容 3</van-tab>
-      <van-tab>内容 4</van-tab>
-    </van-tabs>
+      </li>
+    </ul>
     <!--详情页-->
     <!--底部导航-->
     <TheFooter :selected="selected"></TheFooter>
@@ -50,40 +24,48 @@
 
 <script>
 import TheFooter from '../../components/TheFooter'
-import { CONTACT } from '@/api/api-type'
+import { INFO_LIST } from '@/api/api-type'
 
+import InfoList from './InfoList'
 export default {
   name: 'TheInfo',
   components: {
-    TheFooter
+    TheFooter,
+    InfoList
   },
   data() {
     return {
       navType: 'handpick', // 顶部导航分类
-      selected: 1
+      selected: 1, // 底部导航高亮
+      listData: [],
+      param: {
+        type: '1',
+        page: '1',
+        pagesize: '10'
+      }
     }
   },
   mounted () {
-    // this.$axios.post(LOGIN).then(res => {
-    //   console.log(res)
-    // })
     this.initData()
   },
   methods: {
     // 初始化页面数据
     initData () {
-      let self = this
-      // this.$axios(this.url, {type: 1}).then(res => {
-      self.$axios.post(CONTACT, this.qs.stringify({mobile: '18310413634', content: '1'}))
+      this.$axios.post(INFO_LIST, this.param)
         .then(res => {
-          console.log(res)
+          this.listData = res.data.data.data
+          console.log(this.listData)
         })
     },
     handpick() {
       this.navType = 'handpick'
+      this.param.type = 1
+      this.initData()
     },
     all() {
       this.navType = 'all'
+      this.param.type = 0
+      this.initData()
     }
   }
 }
@@ -93,6 +75,7 @@ export default {
 .wraper{
   width: 94%;
   margin: 0 auto;
+  padding-bottom: 50px;
   .nav{
     width:4rem;
     height: 0.8rem;
@@ -110,58 +93,6 @@ export default {
       &.active{
         background-color: #494a4a;
         color: #fff;
-      }
-    }
-  }
-  .item{
-    position: relative;
-    margin-top: 10px;
-    margin-bottom: 0.2rem;
-    border-radius: 0 0 0.4rem 0.4rem;
-    box-shadow: 0 4px 11px 2px rgba(0,0,0,0.1);
-    .img-con{
-      width: 100%;
-      height: 3.8rem;
-      overflow: hidden;
-      img{
-        width: 100%;
-      }
-    }
-    .bottom{
-      padding:0.2rem 0.25rem;
-      .title{
-        font-size: 0.3rem;
-        color: #666;
-      }
-      .scan{
-        font-size: 0.24rem;
-        color: #8c8c8c;
-        i{
-          margin-right: 10px;
-        }
-      }
-    }
-    .date{
-      position: absolute;
-      top: -8px;
-      left: 10px;
-      width: 1.22rem;
-      height: 1.1rem;
-      background: url("./bg.png") no-repeat;
-      background-size: 100%;
-      padding-top: 5px;
-      span{
-        display: block;
-        text-align: center;
-        font-size: 0.24rem;
-        color: #000;
-        &:first-child:after{
-          content: '';
-          display: block;
-          width: 40%;
-          border-bottom: 1px solid #666666;
-          margin: 0 auto;
-        }
       }
     }
   }

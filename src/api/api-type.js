@@ -25,3 +25,4 @@ export const CART_LIST = BASE_URL + '/api/cart/list'// 购物车列表的接口
 export const CART_DELETE = BASE_URL + '/api/cart/delete'// 删除购物车的接口
 export const CART_DETAIL = BASE_URL + '/api/cart/detail'// 结算购物车的接口
 export const USER_DETAIL = BASE_URL + '/api/user/detail'// 用户详情的接口
+export const ALL_CATEGORY = BASE_URL + '/api/getAllCategory'// 获取所有分类

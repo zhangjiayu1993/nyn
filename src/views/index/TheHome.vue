@@ -23,22 +23,7 @@
     <img src="./images/index_04.jpg" class="image"/>
     <img src="./images/index_05.jpg" class="image"/>
   </div>
-  <i class="iconfont icon-liulan" style="font-size: 100px"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
-  <i class="iconfont icon-liulan"></i>
+
   <!--页脚-->
   <TheFooter :selected="selected"></TheFooter>
 </div>
@@ -46,12 +31,24 @@
 
 <script>
 import TheFooter from '../../components/TheFooter'
+import { ALL_CATEGORY } from '@/api/api-type'
 export default {
   name: 'TheHome',
   components: {TheFooter},
   data() {
     return {
-      selected: 0
+      selected: 0,
+      token: ''
+    }
+  },
+  created () {
+    this.initData()
+  },
+  methods: {
+    initData() {
+      this.$axios.post(ALL_CATEGORY, {token: this.token, page: 1, pagesize: 10}).then(res => {
+        console.log(res)
+      })
     }
   }
 }
