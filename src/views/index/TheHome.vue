@@ -17,7 +17,7 @@
     <img src="./images/index_05.jpg" class="image"/>
   </div>
   <ul class="category-wraper">
-    <router-link tag="li" :to="{path: '/goodslist', query:{categoryId: item.id}}" v-for="(item, index) in categoryData" :key="index">
+    <router-link tag="li" :to="{path: '/goodslist', query:{categoryId: item.id, title: item.title}}" v-for="(item, index) in categoryData" :key="index">
       <div class="title">{{item.id}}</div>
       <div class="detail">{{item.title}}</div>
     </router-link>

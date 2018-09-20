@@ -76,6 +76,7 @@ export default {
   width: 94%;
   margin: 0 auto;
   padding-bottom: 50px;
+  overflow: hidden;
   .nav{
     width:4rem;
     height: 0.8rem;
