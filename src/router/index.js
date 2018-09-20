@@ -1,10 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import TheIndex from '@/views/index/TheHome'
-import TheMy from '@/views/my/TheHome'
-import TheInfo from '@/views/info/TheHome'
-import InfoDetal from '@/views/info/InfoDetail'
-import TheCart from '@/views/cart/TheHome'
+// import TheMy from '@/views/my/TheHome'
+// import TheInfo from '@/views/info/TheHome'
+// import InfoDetal from '@/views/info/InfoDetail'
+// import TheCart from '@/views/cart/TheHome'
+
+// 按需加载路由模块
+const TheMy = () => import('@/views/my/TheHome')
+const TheInfo = () => import('@/views/info/TheHome')
+const InfoDetal = () => import('@/views/info/InfoDetail')
+const TheCart = () => import('@/views/cart/TheHome')
+const GoodsList = () => import('@/views/index/GoodsList')
 
 Vue.use(Router)
 
@@ -35,6 +42,11 @@ export default new Router({
       path: '/infodetail',
       name: 'InfoDetal',
       component: InfoDetal
+    },
+    {
+      path: '/goodslist',
+      name: 'GoodsList',
+      component: GoodsList
     }
   ]
 })

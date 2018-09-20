@@ -1,13 +1,6 @@
 <template>
 <div class="wraper">
   <!--banner-->
-  <!--<mt-swipe :auto="4000" class="banner">-->
-    <!--<mt-swipe-item>-->
-      <!--<img src="./images/banner.jpg">-->
-    <!--</mt-swipe-item>-->
-    <!--<mt-swipe-item>2</mt-swipe-item>-->
-    <!--<mt-swipe-item>3</mt-swipe-item>-->
-  <!--</mt-swipe>-->
   <van-swipe :autoplay="3000" class="banner">
     <van-swipe-item>
       <img src="./images/banner.jpg">
@@ -23,7 +16,12 @@
     <img src="./images/index_04.jpg" class="image"/>
     <img src="./images/index_05.jpg" class="image"/>
   </div>
-
+  <ul class="category-wraper">
+    <router-link tag="li" :to="{path: '/goodslist', query:{categoryId: item.id}}" v-for="(item, index) in categoryData" :key="index">
+      <div class="title">{{item.id}}</div>
+      <div class="detail">{{item.title}}</div>
+    </router-link>
+  </ul>
   <!--页脚-->
   <TheFooter :selected="selected"></TheFooter>
 </div>
@@ -38,7 +36,8 @@ export default {
   data() {
     return {
       selected: 0,
-      token: ''
+      token: '',
+      categoryData: []
     }
   },
   created () {
@@ -47,21 +46,13 @@ export default {
   methods: {
     initData() {
       this.$axios.post(ALL_CATEGORY, {token: this.token, page: 1, pagesize: 10}).then(res => {
-        console.log(res)
+        this.categoryData = res.data.data.data
+        console.log(this.categoryData)
       })
     }
   }
 }
 </script>
-<style>
-  .mint-swipe-indicator.is-active{
-    background: #ed4e16 !important;
-    opacity: 1;
-  }
-  .mint-swipe-indicator{
-    opacity: 0.4;
-  }
-</style>
 <style scoped lang="less">
 .wraper{
   padding-bottom: 55px;
