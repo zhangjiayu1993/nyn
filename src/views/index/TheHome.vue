@@ -18,8 +18,8 @@
   </div>
   <ul class="category-wraper">
     <router-link tag="li" :to="{path: '/goodslist', query:{categoryId: item.id, title: item.title}}" v-for="(item, index) in categoryData" :key="index">
-      <div class="title">{{item.id}}</div>
-      <div class="detail">{{item.title}}</div>
+      <div class="title"><img :src="item.thumb"></div>
+      <div class="detail"><img :src="item.pic"></div>
     </router-link>
   </ul>
   <!--页脚-->
@@ -66,6 +66,29 @@ export default {
   .gsjs{
     .image{
       width: 100%;
+    }
+  }
+  .category-wraper{
+    background-color: #e6e5e8;
+    li{
+      margin-bottom: 10px;
+      .title{
+        background-color: #fff;
+        text-align: center;
+        padding: 0.2rem 0;
+        img{
+          width: 0.8rem;
+          height: 1rem;
+        }
+      }
+      .detail{
+        width: 100%;
+        height: 3.4rem;
+        img{
+          width: 100%;
+          height: 100%;
+        }
+      }
     }
   }
 }

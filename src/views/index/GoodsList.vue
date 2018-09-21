@@ -5,31 +5,24 @@
       <span>{{title}}</span>
     </div>
     <van-list
-      class="goods"
       v-model="loading"
       :finished="finished"
+      :immediate-check="immediate"
+      :loading-text="'加载中~'"
       @load="onLoad"
     >
-      <!--<router-link tag="li" to="" class="list" v-for="(list, index) in listData" :key="index">-->
-        <!--<div class="img-con">-->
-          <!--<img :src="list.thumb">-->
-        <!--</div>-->
-        <!--<div class="title ellipsis">{{list.title}}</div>-->
-        <!--<div class="description">{{list.desc | subDesc}}</div>-->
-        <!--<div class="price">￥{{list.price}}</div>-->
-      <!--</router-link>-->
-      <van-cell v-for="item in listData" :key="item" :title="item + ''" />
+    <ul class="goods">
+      <router-link tag="li" to="" class="list" v-for="(list, index) in listData" :key="index">
+        <div class="img-con">
+          <img :src="list.thumb">
+        </div>
+        <div class="title ellipsis">{{list.title}}</div>
+        <div class="description">{{list.desc | subDesc}}</div>
+        <div class="price">￥{{list.price}}</div>
+      </router-link>
+    </ul>
+      <!--<van-cell v-for="item in list" :key="item" :title="item + ''" />-->
     </van-list>
-    <!--<ul class="goods">-->
-      <!--<router-link tag="li" to="" class="list" v-for="(list, index) in listData" :key="index">-->
-        <!--<div class="img-con">-->
-          <!--<img :src="list.thumb">-->
-        <!--</div>-->
-        <!--<div class="title ellipsis">{{list.title}}</div>-->
-        <!--<div class="description">{{list.desc | subDesc}}</div>-->
-        <!--<div class="price">￥{{list.price}}</div>-->
-      <!--</router-link>-->
-    <!--</ul>-->
   </div>
 </div>
 </template>
@@ -41,18 +34,23 @@ export default {
   data() {
     return {
       title: this.$route.query.title,
+      currentPage: 2,
       param: {
         category_id: this.$route.query.categoryId,
         page: 1,
-        pagesize: 10
+        pagesize: 2
       },
       listData: [],
       loading: false,
-      finished: false
+      finished: false,
+      totalPage: 0,
+      immediate: false,
+      list: []
     }
   },
   created() {
-    this.initData()
+    this.initData(this.param)
+    console.log(this.param.page)
   },
   filters: {
     subDesc: (val) => {
@@ -66,11 +64,35 @@ export default {
     }
   },
   methods: {
-    initData() {
-      this.$axios.post(GOODS_LIST, this.param).then(res => {
+    initData(param) {
+      this.$axios.post(GOODS_LIST, param).then(res => {
         this.listData = res.data.data.data
+        this.totalPage = res.data.data.count
         console.log(res.data.data.data)
       })
+    },
+    onLoad() {
+      // setTimeout(() => {
+      // debugger
+      let num = this.currentPage++
+      this.param.page = num
+      console.log(num)
+      debugger
+      if (num < this.totalPage) {
+        this.initData(this.param)
+        this.loading = false;
+      } else {
+        this.finished = true
+      }
+      // for (let i = 0; i < 5; i++) {
+      //   this.list.push(this.list.length + 1);
+      // }
+      // debugger
+      // this.loading = false;
+      // if (this.list.length >= 40) {
+      //   this.finished = true;
+      // }
+      // }, 500);
     }
   }
 }
@@ -108,8 +130,12 @@ export default {
     }
   }
   .goods{
+    display: -webkit-flex; /* Safari */
+    -webkit-justify-content: space-between; /* Safari 6.1+ */
     display: flex;
     justify-content: space-between;
+    flex-flow: row wrap;
+    width: 100%;
     .list{
       background-color: #fff;
       height: 6rem;
