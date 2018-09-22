@@ -11,7 +11,7 @@
       @load="onLoad"
     >
     <ul class="goods">
-      <router-link tag="li" to="" class="list" v-for="(list, index) in listData" :key="index">
+      <router-link tag="li" :to="{path: 'goodsdetail', query: {goodId: list.id}}" class="list" v-for="(list, index) in listData" :key="index">
         <div class="img-con">
           <img :src="list.thumb">
         </div>

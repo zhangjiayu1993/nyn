@@ -12,6 +12,7 @@ const TheInfo = () => import('@/views/info/TheHome')
 const InfoDetal = () => import('@/views/info/InfoDetail')
 const TheCart = () => import('@/views/cart/TheHome')
 const GoodsList = () => import('@/views/index/GoodsList')
+const GoodsDetail = () => import('@/views/index/GoodsDetail')
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
       path: '/goodslist',
       name: 'GoodsList',
       component: GoodsList
+    },
+    {
+      path: '/goodsdetail',
+      name: 'GoodsDetail',
+      component: GoodsDetail
     }
   ]
 })
