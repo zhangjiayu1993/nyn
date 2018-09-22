@@ -7,7 +7,6 @@
     <van-list
       v-model="loading"
       :finished="finished"
-      :immediate-check="immediate"
       :loading-text="'加载中~'"
       @load="onLoad"
     >
@@ -44,13 +43,11 @@ export default {
       loading: false,
       finished: false,
       totalPage: 0,
-      immediate: false,
       list: []
     }
   },
   created() {
     this.initData(this.param)
-    console.log(this.param.page)
   },
   filters: {
     subDesc: (val) => {
@@ -67,32 +64,29 @@ export default {
     initData(param) {
       this.$axios.post(GOODS_LIST, param).then(res => {
         this.listData = res.data.data.data
-        this.totalPage = res.data.data.count
-        console.log(res.data.data.data)
+        this.totalPage = res.data.data.total_page
+        console.log(this.listData)
+        console.log(111)
       })
     },
     onLoad() {
-      // setTimeout(() => {
-      // debugger
-      let num = this.currentPage++
-      this.param.page = num
-      console.log(num)
-      debugger
-      if (num < this.totalPage) {
-        this.initData(this.param)
-        this.loading = false;
-      } else {
-        this.finished = true
-      }
-      // for (let i = 0; i < 5; i++) {
-      //   this.list.push(this.list.length + 1);
-      // }
-      // debugger
-      // this.loading = false;
-      // if (this.list.length >= 40) {
-      //   this.finished = true;
-      // }
-      // }, 500);
+      let _this = this
+      setTimeout(() => {
+        let listParm = {
+          category_id: _this.$route.query.categoryId,
+          page: _this.param.page + 1,
+          pagesize: 2
+        }
+        this.$axios.post(GOODS_LIST, listParm).then(res => {
+          _this.listData = _this.listData.concat(res.data.data.data)
+          _this.totalPage = res.data.data.total_page
+          _this.loading = false
+          _this.param.page++
+        })
+        if (_this.param.page >= _this.totalPage) {
+          _this.finished = true;
+        }
+      }, 500);
     }
   }
 }
