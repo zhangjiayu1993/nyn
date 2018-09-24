@@ -1,17 +1,17 @@
 <template>
 <div class="wraper">
   <div class="avatar">
-    <img src="./avatar.jpg" class="image"/>
-    <span class="name">周杰伦</span>
+    <img :src="listData.avatar" class="image"/>
+    <span class="name">{{listData.name}}</span>
   </div>
   <van-cell-group class="cell">
-    <van-cell is-link>
+    <van-cell is-link to="/myorder">
       <template slot="title">
         <i class="iconfont icon-dingdan"></i>
         <span class="van-cell-text">我的订单</span>
       </template>
     </van-cell>
-    <van-cell  is-link>
+    <van-cell  is-link to="addcontact">
       <template slot="title">
         <i class="iconfont icon-hezuo"></i>
         <span class="van-cell-text">商务合作</span>
@@ -19,7 +19,7 @@
     </van-cell>
   </van-cell-group>
   <van-cell-group class="cell">
-    <van-cell is-link>
+    <van-cell is-link  to="/aboutus">
       <template slot="title">
         <i class="iconfont icon-guanyuwomen"></i>
         <span class="van-cell-text">关于我们</span>
@@ -31,13 +31,26 @@
 </template>
 
 <script>
+import { USER_DETAIL } from '@/api/api-type'
 import TheFooter from '../../components/TheFooter'
 export default {
   name: 'TheMy',
   components: {TheFooter},
   data() {
     return {
-      selected: 3
+      selected: 3,
+      listData: []
+    }
+  },
+  created() {
+    this.initData()
+  },
+  methods: {
+    initData() {
+      this.$axios.post(USER_DETAIL, {token: 'token'}).then(res => {
+        this.listData = res.data.data
+        console.log(this.listData)
+      })
     }
   }
 }
