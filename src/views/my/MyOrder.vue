@@ -1,27 +1,11 @@
 <template>
 <div class="wraper">
   <div class="order">
-    <div class="top">订购号：121222</div>
+    <div class="top">订单号：</div>
     <van-card
       title="222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222"
       desc="eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-      :thumb="imageURL">
-      <div slot="footer">
-        <span class="price">￥<i>3.00</i></span>
-        <span class="number">X2</span>
-      </div>
-    </van-card>
-    <van-row class="bottom">
-      <van-col span="20">运单号：111</van-col>
-      <van-col span="4">已发货</van-col>
-    </van-row>
-  </div>
-  <div class="order">
-    <div class="top">订购号：121222</div>
-    <van-card
-      title="222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222"
-      desc="eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-      :thumb="imageURL">
+      :thumb="1">
       <div slot="footer">
         <span class="price">￥<i>3.00</i></span>
         <span class="number">X2</span>
@@ -36,24 +20,43 @@
 </template>
 
 <script>
+import { ORDER_LIST } from '@/api/api-type'
 export default {
   name: 'MyOrder',
   data() {
-    return {}
+    return {
+      param: {
+        token: 'token',
+        page: 1,
+        pagesize: 5
+      },
+      orderData: []
+    }
   },
-  methods: {}
+  created() {
+    this.initData()
+  },
+  methods: {
+    initData() {
+      this.$axios.post(ORDER_LIST, this.param).then(res => {
+        this.orderData = res.data.data.data
+      })
+    }
+  }
 }
 </script>
 
 <style lang="less">
 .order{
   .van-card__footer{
-    right: auto;
-    .price, .number{
-      display: inline-block;
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: 140px;
+    .number{
+      float: right;
     }
     .price{
-      margin-right: 2.9rem;
+      float: left;
     }
   }
 }

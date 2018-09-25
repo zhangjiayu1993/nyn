@@ -63,7 +63,7 @@ const errorFn = err => {
   return Promise.reject(err)
 }
 /* ***此处开始封装不同后台下的axios实例 ****/
-// 龙湖后台
+
 const $axios = axios.create({
   headers: {
   },
