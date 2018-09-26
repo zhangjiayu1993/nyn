@@ -43,7 +43,11 @@ export default {
   },
   methods: {
     onAdd() {
-      this.$toast('新增地址');
+      this.$router.push({
+        path: '/addressedit',
+        name: 'AddressEdit'
+      })
+      // this.$toast('新增地址');
     },
     onEdit(item, index) {
       this.$toast('编辑地址:' + index);

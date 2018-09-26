@@ -14,6 +14,7 @@ const AddContact = () => import('@/views/my/AddContact')
 const MyOrder = () => import('@/views/my/MyOrder')
 const FillingOrder = () => import('@/views/cart/FillingOrder')
 const AddressList = () => import('@/views/cart/AddressList')
+const AddressEdit = () => import('@/views/cart/AddressEdit')
 
 Vue.use(Router)
 
@@ -79,6 +80,11 @@ export default new Router({
       path: '/addresslist',
       name: 'AddressList',
       component: AddressList
+    },
+    {
+      path: '/addressedit',
+      name: 'AddressEdit',
+      component: AddressEdit
     }
   ]
 })
