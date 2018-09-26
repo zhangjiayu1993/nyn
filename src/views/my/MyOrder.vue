@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       param: {
-        token: 'token',
+        token: this.$store.state.token,
         page: 1,
         pagesize: 5
       },

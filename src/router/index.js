@@ -12,6 +12,7 @@ const GoodsDetail = () => import('@/views/index/GoodsDetail')
 const AboutUs = () => import('@/views/my/AboutUs')
 const AddContact = () => import('@/views/my/AddContact')
 const MyOrder = () => import('@/views/my/MyOrder')
+const FillingOrder = () => import('@/views/cart/FillingOrder')
 
 Vue.use(Router)
 
@@ -67,6 +68,11 @@ export default new Router({
       path: '/myorder',
       name: 'MyOrder',
       component: MyOrder
+    },
+    {
+      path: '/fillingorder',
+      name: 'FillingOrder',
+      component: FillingOrder
     }
   ]
 })

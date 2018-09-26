@@ -53,7 +53,7 @@ export default {
     // 添加商品
     addGood(goodId) {
       console.log(this.selectVal)
-      this.$axios.post(CART_ADD, {goods_id: goodId, token: 'token', num: this.selectVal}).then(res => {
+      this.$axios.post(CART_ADD, {goods_id: goodId, token: 'bac5f56f2570eff8e466e4da8d1b7dc6', num: this.selectVal}).then(res => {
         this.count = this.selectVal
         console.log(res.data.data)
       })
@@ -70,7 +70,12 @@ export default {
     // 加入购物车
     addShopCart() {},
     // 立即购买
-    buyNow() {}
+    buyNow() {
+      this.$router.push({
+        path: '/fillingorder',
+        name: 'FillingOrder'
+      })
+    }
   }
 }
 </script>

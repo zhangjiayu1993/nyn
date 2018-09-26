@@ -6,7 +6,8 @@ Vue.use(Vuex)
 const state = {
   count: 1,
   users: {},
-  dataChange: false
+  dataChange: false,
+  token: '5cc915c437c43fb8129c2437db72d734'
 }
 const mutations = {
   add(state, num) {

@@ -39,7 +39,8 @@ export default {
   data() {
     return {
       selected: 3,
-      listData: []
+      listData: [],
+      token: this.$store.state.token
     }
   },
   created() {
@@ -47,7 +48,7 @@ export default {
   },
   methods: {
     initData() {
-      this.$axios.post(USER_DETAIL, {token: 'token'}).then(res => {
+      this.$axios.post(USER_DETAIL, {token: this.token}).then(res => {
         this.listData = res.data.data
         console.log(this.listData)
       })

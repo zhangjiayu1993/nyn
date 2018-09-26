@@ -29,19 +29,23 @@
 
 <script>
 import TheFooter from '../../components/TheFooter'
-import { ALL_CATEGORY } from '@/api/api-type'
+import { ALL_CATEGORY, LOGIN } from '@/api/api-type'
 export default {
   name: 'TheHome',
   components: {TheFooter},
   data() {
     return {
       selected: 0,
-      token: '',
-      categoryData: []
+      categoryData: [],
+      token: this.$store.state.token
     }
   },
   created () {
-    this.initData()
+    this.initData();
+    // 登录
+    this.$axios.post(LOGIN).then(res => {
+      console.log(res)
+    })
   },
   methods: {
     initData() {

@@ -41,7 +41,7 @@ export default {
       checked: [],
       allChecked: [],
       param: {
-        token: 'token',
+        token: this.$store.state.token,
         page: 1,
         pagesize: 5
       }
@@ -74,6 +74,9 @@ export default {
           });
           break;
       }
+    },
+    // 提交订单
+    onSubmit() {
     }
   }
 }
@@ -141,7 +144,7 @@ export default {
     }
   }
   .van-submit-bar{
-    /*bottom: 50px;*/
+    bottom: 50px;
     .van-checkbox{
       margin-left: 10px;
     }
