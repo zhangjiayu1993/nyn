@@ -13,14 +13,14 @@
     </div>
     <div class="select-num">
       <span class="tip">数量选择</span>
-      <span class="steper"><van-stepper v-model="selectVal" /></span>
+      <span class="steper"><van-stepper v-model="selectVal" @change="addGood(goodData.id)"/></span>
     </div>
   </div>
   <div class="headline"><span><i class="iconfont icon-tupian"></i>商品详情</span></div>
   <div class="good-de"><div v-html="goodData.content"></div></div>
   <!--商品页行动点-->
   <van-goods-action>
-    <van-goods-action-mini-btn icon="cart" text="购物车" @click="shopCart" info="5"/>
+    <van-goods-action-mini-btn icon="cart" text="购物车" @click="shopCart" :info="count"/>
     <van-goods-action-big-btn text="加入购物车" @click="addShopCart" />
     <van-goods-action-big-btn text="立即购买" @click="buyNow" primary />
   </van-goods-action>
@@ -28,14 +28,15 @@
 </template>
 
 <script>
-import { GOODS_DETAIL } from '@/api/api-type'
+import { GOODS_DETAIL, CART_ADD } from '@/api/api-type'
 export default {
   name: 'GoodsDetail',
   data() {
     return {
       goodId: this.$route.query.goodId,
       goodData: [],
-      selectVal: 1 // 进步器默认值
+      selectVal: 1, // 进步器默认值
+      count: ''
     }
   },
   created () {
@@ -49,8 +50,23 @@ export default {
         console.log(res.data.data)
       })
     },
+    // 添加商品
+    addGood(goodId) {
+      console.log(this.selectVal)
+      this.$axios.post(CART_ADD, {goods_id: goodId, token: 'token', num: this.selectVal}).then(res => {
+        this.count = this.selectVal
+        console.log(res.data.data)
+      })
+    },
     // 购物车
-    shopCart() {},
+    shopCart() {
+      this.$router.replace({
+        path: '/cart',
+        name: 'TheCart',
+        query: {
+        }
+      })
+    },
     // 加入购物车
     addShopCart() {},
     // 立即购买

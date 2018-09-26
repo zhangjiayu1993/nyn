@@ -31,15 +31,34 @@
 
 <script>
 import TheFooter from '../../components/TheFooter'
+import { CART_LIST } from '../../api/api-type'
 export default {
   name: 'TheCart',
   components: {TheFooter},
   data() {
     return {
-      selected: 2
+      selected: 2,
+      checked: [],
+      allChecked: [],
+      param: {
+        token: 'token',
+        page: 1,
+        pagesize: 5
+      }
     }
   },
+  created () {
+    this.initData()
+    console.log(this.$route.path)
+    console.log(this.comefrom)
+  },
   methods: {
+    initData() {
+      this.$axios.post(CART_LIST, this.param).then(res => {
+        console.log(res)
+      })
+    },
+    // 左滑删除订单
     onClose(clickPosition, instance) {
       switch (clickPosition) {
         case 'left':
@@ -62,6 +81,19 @@ export default {
 
 <style lang="less">
 .wraper.cart{
+  /* 提交订单按钮颜色 */
+  .van-button--danger{
+    background-color: #1c1d1d;
+    border-color: #1c1d1d;
+  }
+  /*checkbox 颜色修改*/
+  .van-checkbox__icon--checked .van-icon{
+    background-color: #ed4e16;
+    border-color: #ed4e16;
+  }
+  .van-submit-bar__price{
+    color: #ed4e16;
+  }
   .van-card__thumb{
     left: 40px;
     background-color: #000;
@@ -74,6 +106,7 @@ export default {
     left: 0;
     .price{
       float: left;
+      color: #ed4e16;
     }
     .van-stepper{
       float: right;
@@ -108,7 +141,7 @@ export default {
     }
   }
   .van-submit-bar{
-    bottom: 50px;
+    /*bottom: 50px;*/
     .van-checkbox{
       margin-left: 10px;
     }
