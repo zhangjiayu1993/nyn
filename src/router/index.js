@@ -13,6 +13,7 @@ const AboutUs = () => import('@/views/my/AboutUs')
 const AddContact = () => import('@/views/my/AddContact')
 const MyOrder = () => import('@/views/my/MyOrder')
 const FillingOrder = () => import('@/views/cart/FillingOrder')
+const AddressList = () => import('@/views/cart/AddressList')
 
 Vue.use(Router)
 
@@ -73,6 +74,11 @@ export default new Router({
       path: '/fillingorder',
       name: 'FillingOrder',
       component: FillingOrder
+    },
+    {
+      path: '/addresslist',
+      name: 'AddressList',
+      component: AddressList
     }
   ]
 })
