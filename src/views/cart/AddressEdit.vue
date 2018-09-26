@@ -59,6 +59,7 @@ export default {
 </style>
 <style scoped lang="less">
 .wraper{
+  padding-top: 15px;
   min-height: 100%;
   background-color: #f4f4f4;
 }

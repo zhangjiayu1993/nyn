@@ -5,6 +5,17 @@
       <div class="add-word">新增收货地址</div>
       <i class="van-icon van-icon-arrow van-cell__right-icon"></i>
   </div>
+  <div class="add-address" @click="selectAddress">
+    <i class="iconfont icon-dizhi"></i>
+    <div class="detail">
+      <p class="clearfix">
+        <span class="pull-left">收货人：张三</span>
+        <span class="pull-right">15210987980</span>
+      </p>
+      <p>收获地址：北京市东城区天安门城中心啊啊啊</p>
+    </div>
+    <i class="van-icon van-icon-arrow van-cell__right-icon"></i>
+  </div>
   <!--已选择的商品-->
   <div class="order-selected">
     <van-card
@@ -38,6 +49,12 @@ export default {
   methods: {
     onSubmit() {},
     addAddress() {
+      this.$router.push({
+        path: '/addressedit',
+        name: 'AddressEdit'
+      })
+    },
+    selectAddress() {
       this.$router.push({
         path: '/addresslist',
         name: 'AddressList'
@@ -101,27 +118,37 @@ export default {
     padding:15px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    height: 80px;
+    min-height: 100px;
     position: relative;
     background-color: #fff;
     color: #333;
     font-size: 14px;
     overflow: hidden;
+    .icon-dizhi{
+      font-size: 40px;
+      display: inline-block;
+      height: 70px;
+      line-height: 70px;
+      margin-right: 15px;
+    }
+    .detail{
+      line-height: 24px;
+    }
     .icon-tianjia{
       margin-right: 15px;
       font-size: 40px;
       vertical-align: middle;
       display: inline-block;
       color: #d3d3d3;
-      height: 50px;
-      line-height: 50px;
+      height: 70px;
+      line-height: 70px;
     }
     .add-word{
       flex: 1;
-      line-height: 50px;
+      line-height: 70px;
     }
     .van-icon-arrow{
-      line-height: 50px;
+      line-height: 70px;
     }
     &:before{
       content: '';
