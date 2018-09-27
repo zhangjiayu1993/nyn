@@ -1,18 +1,18 @@
 <template>
 <div class="wraper fill-order">
-  <div class="add-address" @click="addAddress">
+  <div class="add-address" @click="addAddress" v-if="isAddrSeclected">
       <i class="iconfont icon-tianjia"></i>
       <div class="add-word">新增收货地址</div>
       <i class="van-icon van-icon-arrow van-cell__right-icon"></i>
   </div>
-  <div class="add-address" @click="selectAddress">
+  <div class="add-address" @click="selectAddress" v-else>
     <i class="iconfont icon-dizhi"></i>
     <div class="detail">
       <p class="clearfix">
-        <span class="pull-left">收货人：张三</span>
-        <span class="pull-right">15210987980</span>
+        <span class="pull-left">收货人：{{addrSelected.name}}</span>
+        <span class="pull-right">{{addrSelected.tel}}</span>
       </p>
-      <p>收获地址：北京市东城区天安门城中心啊啊啊</p>
+      <p>收获地址：{{addrSelected.address}}</p>
     </div>
     <i class="van-icon van-icon-arrow van-cell__right-icon"></i>
   </div>
@@ -21,7 +21,7 @@
     <van-card
       title="3"
       desc="3"
-      :thumb="1">
+      :thumb="url">
       <div slot="footer">
         <span class="price">￥<i>3.00</i></span>
         <span class="number">X2</span>
@@ -39,20 +39,42 @@
 </template>
 
 <script>
+import { ADDRESS_LIST } from '@/api/api-type';
 export default {
   name: 'FillingOrder',
   data () {
     return {
-      agree: true
+      agree: true,
+      addrSelected: this.$route.params,
+      token: this.$store.state.token,
+      isAddrSeclected: false,
+      addrLen: 0 // 是否有已添加的地址
     }
+  },
+  created() {
+    if (JSON.stringify(this.addrSelected) == '{}') {
+      this.isAddrSeclected = true
+    } else {
+      this.isAddrSeclected = false
+    }
+    this.$axios.post(ADDRESS_LIST, {token: this.token, page: 1, pagesize: 10}).then(res => {
+      this.addrLen = res.data.data.data.length
+    })
   },
   methods: {
     onSubmit() {},
     addAddress() {
-      this.$router.push({
-        path: '/addressedit',
-        name: 'AddressEdit'
-      })
+      if (this.addrLen == 0) {
+        this.$router.push({
+          path: '/addressedit',
+          name: 'AddressEdit'
+        })
+      } else {
+        this.$router.push({
+          path: '/addresslist',
+          name: 'AddressList'
+        })
+      }
     },
     selectAddress() {
       this.$router.push({
@@ -133,6 +155,7 @@ export default {
     }
     .detail{
       line-height: 24px;
+      flex: 1;
     }
     .icon-tianjia{
       margin-right: 15px;

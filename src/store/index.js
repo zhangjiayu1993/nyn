@@ -7,7 +7,7 @@ const state = {
   count: 1,
   users: {},
   dataChange: false,
-  token: '5cc915c437c43fb8129c2437db72d734'
+  token: '5cc915c437c43fb8129c2437db72d734' // token
 }
 const mutations = {
   add(state, num) {

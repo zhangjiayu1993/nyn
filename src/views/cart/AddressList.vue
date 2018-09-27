@@ -3,54 +3,68 @@
   <van-address-list
     v-model="chosenAddressId"
     :list="list"
-    :disabled-list="disabledList"
-    disabled-text="以下地址超出配送范围"
     @add="onAdd"
     @edit="onEdit"
+    @select="onSelect"
   ></van-address-list>
 </div>
 </template>
 
 <script>
+import { ADDRESS_LIST, ADDRESS_STATUS } from '@/api/api-type';
 export default {
   name: 'AddressList',
   data() {
     return {
       chosenAddressId: '1',
-      list: [
-        {
-          id: '1',
-          name: '张三',
-          tel: '13000000000',
-          address: '浙江省杭州市西湖区文三路 138 号东方通信大厦 7 楼 501 室'
-        },
-        {
-          id: '2',
-          name: '李四',
-          tel: '1310000000',
-          address: '浙江省杭州市拱墅区莫干山路 50 号'
-        }
-      ],
-      disabledList: [
-        {
-          id: '3',
-          name: '王五',
-          tel: '1320000000',
-          address: '浙江省杭州市滨江区江南大道 15 号'
-        }
-      ]
+      list: [], // 地址列表
+      token: this.$store.state.token
     }
   },
+  created() {
+    this.initData()
+  },
   methods: {
+    initData() {
+      this.$axios.post(ADDRESS_LIST, {token: this.token, page: 1, pagesize: 10}).then(res => {
+        let result = res.data.data.data
+        for (let i = 0; i < result.length; i++) {
+          let obj = {};
+          obj.id = result[i].id;
+          obj.address = result[i].prov + ' ' + result[i].city + ' ' + result[i].area + ' ' + result[i].address;
+          obj.city = result[i].city;
+          obj.province = result[i].prov;
+          obj.county = result[i].area;
+          obj.addressDetail = result[i].address;
+          obj.areaCode = result[i].areaCode; // 地址代码  需要后台增加字段
+          obj.name = result[i].name;
+          obj.tel = result[i].mobile;
+          this.list.push(obj)
+        }
+      })
+    },
     onAdd() {
       this.$router.push({
         path: '/addressedit',
         name: 'AddressEdit'
       })
-      // this.$toast('新增地址');
     },
     onEdit(item, index) {
-      this.$toast('编辑地址:' + index);
+      this.$router.push({
+        path: '/addressedit',
+        name: 'AddressEdit',
+        params: item
+      })
+      // this.$toast('编辑地址:' + index);
+    },
+    onSelect(item, index) {
+      this.$router.push({
+        path: '/fillingorder',
+        name: 'FillingOrder',
+        params: item
+      });
+      // 设为默认地址
+      this.$axios.post(ADDRESS_STATUS, {token: this.token, address_id: item.id}).then(res => console.log(res))
     }
   }
 }
