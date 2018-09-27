@@ -5,40 +5,51 @@
     show-delete
     show-set-default
     show-search-result
-    :search-result="searchResult"
     @save="onSave"
     @delete="onDelete"
-    @change-detail="onChangeDetail"
     delete-button-text="删除地址"
   />
 </div>
 </template>
 
 <script>
+import { ADDRESS_ADD, ADDRESS_LIST } from '@/api/api-type';
+//  引入areaList
+import areaList from 'vant/packages/area/demo/area'
+
 export default {
   name: 'AddressEdit',
   data () {
     return {
-      areaList: '',
-      searchResult: []
+      areaList,
+      token: this.$store.state.token
     }
   },
+  created() {
+    this.$axios.post(ADDRESS_LIST, {token: this.token, page: 1, pagesize: 10}).then(res => {
+      console.log(res)
+    })
+  },
   methods: {
-    onSave() {
-      this.$toast('save');
+    onSave(content) {
+      console.log(content)
+      let addr = {};
+      addr = {
+        token: this.token,
+        prov: content.province,
+        city: content.city,
+        area: content.county,
+        address: content.addressDetail,
+        status: 0,
+        mobile: content.tel,
+        name: content.name
+      };
+      this.$axios.post(ADDRESS_ADD, addr).then(res => {
+        this.$toast('保存成功！');
+      })
     },
     onDelete() {
       this.$toast('delete');
-    },
-    onChangeDetail(val) {
-      if (val) {
-        this.searchResult = [{
-          name: '黄龙万科中心',
-          address: '杭州市西湖区'
-        }];
-      } else {
-        this.searchResult = [];
-      }
     }
   }
 }

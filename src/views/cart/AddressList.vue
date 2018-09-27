@@ -7,7 +7,7 @@
     disabled-text="以下地址超出配送范围"
     @add="onAdd"
     @edit="onEdit"
-  />
+  ></van-address-list>
 </div>
 </template>
 
