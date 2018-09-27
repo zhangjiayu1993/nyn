@@ -2,20 +2,19 @@
   <div class="wraper cart">
     <ul class="cart-list-con">
       <li v-if="cartLisLCount > 0">
-        <van-swipe-cell :right-width="65" :on-close="onClose" v-for="(item, index) in cartList" :key="index">
+        <van-swipe-cell :right-width="65" v-for="(item, index) in cartList" :key="index">
           <van-checkbox v-model="checked"></van-checkbox>
           <van-card
             :title="item.get_goods.title"
             :desc="item.get_goods.desc"
             :thumb="item.get_goods.thumb"
-            :id="item.get_goods.id"
           >
             <div slot="footer">
               <span class="price">￥{{item.get_goods.price}}</span>
               <van-stepper v-model="value"/>
             </div>
           </van-card>
-          <span slot="right">删除</span>
+          <span slot="right" @click="deleteCart(item.id)">删除</span>
         </van-swipe-cell>
       </li>
       <li v-else class="no-good">购物车空空如也~快去选择心仪的产品吧~~</li>
@@ -55,8 +54,12 @@ export default {
   },
   created () {
     this.initData()
-    console.log(this.$route.path)
-    console.log(this.comefrom)
+  },
+  watch: {
+    cartLisLCount: function (val, oldval) {
+      console.log(val, oldval)
+      return val
+    }
   },
   methods: {
     initData() {
@@ -65,30 +68,27 @@ export default {
         if (res.data.error_code == 0) {
           this.cartLisLCount = res.data.data.count
           this.cartList = res.data.data.data
+        } else {
+          this.cartLisLCount = 0
         }
-        console.log(this.cartList)
       })
     },
-    // 左滑删除订单
-    onClose(clickPosition, instance) {
-      switch (clickPosition) {
-        case 'left':
-        case 'cell':
-        case 'outside':
-          instance.close();
-          break;
-        case 'right':
-          this.$dialog.confirm({
-            message: '确定删除吗？'
-          }).then(() => {
-            console.log(instance)
-            this.$axios.post(CART_DELETE, {token: this.token, cart_id: 1}).then(res => {
-              console.log(res)
-            })
-            instance.close();
-          });
-          break;
-      }
+    // 删除订单
+    deleteCart(id) {
+      this.$dialog.confirm({
+        message: '确定删除吗？'
+      }).then(() => {
+        this.$axios.post(CART_DELETE, {token: this.token, cart_id: id}).then(res => {
+          if (res.data.error_code == 0) {
+            console.log(11111111)
+            this.$toast('删除成功~')
+          } else {
+            this.$toast('删除失败~')
+          }
+          this.initData()
+          // setTimeout(this.initData(), 500)
+        })
+      });
     },
     // 提交订单
     onSubmit() {
@@ -140,6 +140,9 @@ export default {
     text-align: center;
     line-height: 100px;
     background-color: #ff3b30;
+    span{
+      display: block;
+    }
   }
 }
 </style>
@@ -168,7 +171,7 @@ export default {
     color: #999;
     font-size: 0.26rem;
     text-align: center;
-    padding: 50px 15px 0 15px;
+    padding: 5rem 15px 0 15px;
   }
 }
 </style>
