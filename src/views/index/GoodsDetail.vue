@@ -33,6 +33,7 @@ export default {
   name: 'GoodsDetail',
   data() {
     return {
+      token: this.$store.state.token,
       goodId: this.$route.query.goodId,
       goodData: [],
       selectVal: 1, // 进步器默认值
@@ -53,7 +54,7 @@ export default {
     // 添加商品
     addGood(goodId) {
       console.log(this.selectVal)
-      this.$axios.post(CART_ADD, {goods_id: goodId, token: 'bac5f56f2570eff8e466e4da8d1b7dc6', num: this.selectVal}).then(res => {
+      this.$axios.post(CART_ADD, {goods_id: goodId, token: this.token, num: this.selectVal}).then(res => {
         this.count = this.selectVal
         console.log(res.data.data)
       })

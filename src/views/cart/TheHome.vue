@@ -1,21 +1,25 @@
 <template>
   <div class="wraper cart">
-    <van-swipe-cell :right-width="65" :on-close="onClose">
-      <van-checkbox v-model="checked"></van-checkbox>
-      <van-card
-        title="标题"
-        desc="描述"
-        num="2"
-        price="2.00"
-        :thumb="src"
-      >
-        <div slot="footer">
-          <span class="price">￥3.00</span>
-          <van-stepper v-model="value"/>
-        </div>
-      </van-card>
-      <span slot="right">删除</span>
-    </van-swipe-cell>
+    <ul class="cart-list-con">
+      <li v-if="cartLisLCount > 0">
+        <van-swipe-cell :right-width="65" :on-close="onClose" v-for="(item, index) in cartList" :key="index">
+          <van-checkbox v-model="checked"></van-checkbox>
+          <van-card
+            :title="item.get_goods.title"
+            :desc="item.get_goods.desc"
+            :thumb="item.get_goods.thumb"
+            :id="item.get_goods.id"
+          >
+            <div slot="footer">
+              <span class="price">￥{{item.get_goods.price}}</span>
+              <van-stepper v-model="value"/>
+            </div>
+          </van-card>
+          <span slot="right">删除</span>
+        </van-swipe-cell>
+      </li>
+      <li v-else class="no-good">购物车空空如也~快去选择心仪的产品吧~~</li>
+    </ul>
     <!--底部提交订单-->
     <van-submit-bar
       :price="3050"
@@ -31,7 +35,7 @@
 
 <script>
 import TheFooter from '../../components/TheFooter'
-import { CART_LIST } from '../../api/api-type'
+import { CART_LIST, CART_DELETE } from '../../api/api-type'
 export default {
   name: 'TheCart',
   components: {TheFooter},
@@ -40,11 +44,13 @@ export default {
       selected: 2,
       checked: [],
       allChecked: [],
+      token: this.$store.state.token,
       param: {
-        token: this.$store.state.token,
         page: 1,
         pagesize: 5
-      }
+      },
+      cartList: [], // 购物车列表
+      cartLisLCount: 0 // 购物车商品数量
     }
   },
   created () {
@@ -54,8 +60,13 @@ export default {
   },
   methods: {
     initData() {
+      this.param.token = this.token
       this.$axios.post(CART_LIST, this.param).then(res => {
-        console.log(res)
+        if (res.data.error_code == 0) {
+          this.cartLisLCount = res.data.data.count
+          this.cartList = res.data.data.data
+        }
+        console.log(this.cartList)
       })
     },
     // 左滑删除订单
@@ -70,6 +81,10 @@ export default {
           this.$dialog.confirm({
             message: '确定删除吗？'
           }).then(() => {
+            console.log(instance)
+            this.$axios.post(CART_DELETE, {token: this.token, cart_id: 1}).then(res => {
+              console.log(res)
+            })
             instance.close();
           });
           break;
@@ -148,6 +163,12 @@ export default {
     .van-checkbox{
       margin-left: 10px;
     }
+  }
+  .no-good{
+    color: #999;
+    font-size: 0.26rem;
+    text-align: center;
+    padding: 50px 15px 0 15px;
   }
 }
 </style>
