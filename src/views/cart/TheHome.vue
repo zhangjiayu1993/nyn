@@ -74,9 +74,12 @@ export default {
           this.cartList = res.data.data.data
           this.checkResult = this.cartList
           this.calcuteTotalPrice()
-        } else {
+        } else if (res.data.error_code == 5203) {
           this.cartLisLCount = 0
           this.$store.state.cartFooterCount = ''
+          this.totalPrice = 0
+        } else {
+          this.$toast(res.data.error_msg)
         }
       })
     },
