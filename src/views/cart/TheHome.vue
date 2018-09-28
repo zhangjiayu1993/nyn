@@ -27,7 +27,7 @@
       button-text="提交订单"
       @submit="onSubmit"
     >
-      <van-checkbox v-model="checked" @change="checkedAll" @click="a">全选</van-checkbox>
+      <van-checkbox v-model="checked" @change="checkedAll">全选</van-checkbox>
     </van-submit-bar>
     <!--底部导航-->
     <TheFooter :selected="selected"></TheFooter>
@@ -118,23 +118,16 @@ export default {
       this.calcuteTotalPrice()
     },
     // 全选全不选
-    checkedAll(flag) {
-      console.log(111111111111)
+    checkedAll() {
       let checkedLength = this.checkResult.length
       let cartLength = this.cartLisLCount
       if (this.checked) {
         this.checkResult = this.cartList
       } else {
-        if (checkedLength == 0) {
-          this.checkResult = []
-        }
         if (checkedLength == cartLength) {
           this.checkResult = []
         }
       }
-    },
-    a() {
-      console.log('aaaaaaaaaaaa')
     },
     // 计算总金额
     calcuteTotalPrice () {

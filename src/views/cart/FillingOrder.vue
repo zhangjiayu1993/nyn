@@ -76,7 +76,9 @@ export default {
       }
     });
     // 默认地址
-    this.$axios.post(ADDRESS_STATUS, {token: this.token})
+    this.$axios.post(ADDRESS_STATUS, {token: this.token}).then(res => {
+      console.log(res.data)
+    })
   },
   methods: {
     onSubmit() {},
