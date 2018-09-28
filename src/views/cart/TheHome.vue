@@ -11,13 +11,13 @@
           >
             <div slot="footer">
               <span class="price">￥{{item.get_goods.price}}</span>
-              <van-stepper v-model="value"/>
+              <van-stepper v-model="item.num" @change="changeCount(item.id, item.num)"/>
             </div>
           </van-card>
           <span slot="right" @click="deleteCart(item.id)">删除</span>
         </van-swipe-cell>
       </li>
-      <li v-else class="no-good">购物车空空如也~快去选择心仪的产品吧~~</li>
+      <li v-else class="no-good">购物车空空如也~快去选择心仪的宝贝吧~~</li>
     </ul>
     <!--底部提交订单-->
     <van-submit-bar
@@ -34,7 +34,7 @@
 
 <script>
 import TheFooter from '../../components/TheFooter'
-import { CART_LIST, CART_DELETE } from '../../api/api-type'
+import { CART_LIST, CART_DELETE, CART_UPDATE } from '../../api/api-type'
 export default {
   name: 'TheCart',
   components: {TheFooter},
@@ -57,7 +57,6 @@ export default {
   },
   watch: {
     cartLisLCount: function (val, oldval) {
-      console.log(val, oldval)
       return val
     }
   },
@@ -67,9 +66,11 @@ export default {
       this.$axios.post(CART_LIST, this.param).then(res => {
         if (res.data.error_code == 0) {
           this.cartLisLCount = res.data.data.count
+          this.$store.state.cartFooterCount = res.data.data.count
           this.cartList = res.data.data.data
         } else {
           this.cartLisLCount = 0
+          this.$store.state.cartFooterCount = ''
         }
       })
     },
@@ -80,7 +81,6 @@ export default {
       }).then(() => {
         this.$axios.post(CART_DELETE, {token: this.token, cart_id: id}).then(res => {
           if (res.data.error_code == 0) {
-            console.log(11111111)
             this.$toast('删除成功~')
           } else {
             this.$toast('删除失败~')
@@ -89,6 +89,17 @@ export default {
           // setTimeout(this.initData(), 500)
         })
       });
+    },
+    // 修改订单数目
+    changeCount(id, val) {
+      console.log(1)
+      console.log(val)
+      this.$axios.post(CART_UPDATE, {token: this.token, cart_id: id, num: 5}).then(res => {
+        console.log(res)
+        if (res.data.error_code == 0) {
+          this.cartList.num = val
+        }
+      })
     },
     // 提交订单
     onSubmit() {

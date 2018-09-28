@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+// import { CART_LIST } from '@/api/api-type'
+// import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -7,9 +9,14 @@ const state = {
   count: 1,
   users: {},
   dataChange: false,
-  token: '5cc915c437c43fb8129c2437db72d734' // token
+  token: '5cc915c437c43fb8129c2437db72d734', // token
+  cartFooterCount: 0 // 页脚购物车显示的数量（按照购物的种类来区分）
 }
 const mutations = {
+  cartFooterCount(state, data) {
+    // state.cartFooterCount = data
+    state.cartFooterCount++
+  },
   add(state, num) {
     state.count += num
   },
@@ -24,6 +31,15 @@ const mutations = {
   }
 }
 const actions = {
+  getCount({commit, state}) {
+    // axios.post(CART_LIST, {token: state.token, page: 1, pagesize: 10}).then(res => {
+    //   if (res.data.error_code == 0) {
+    //     commit('cartFooterCount', res.data.count)
+    //   }
+    //   // state.cartFooterCount = res.data.count
+    // })
+    commit('cartFooterCount', 4)
+  },
   addAction(store, num) {
     store.commit('add', num)
   },
@@ -35,6 +51,9 @@ const actions = {
   }
 }
 const getters = {
+  cartFooterCount(state) {
+    return state.cartFooterCount
+  },
   count(state) {
     return state.count
   },

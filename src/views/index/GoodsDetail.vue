@@ -20,15 +20,16 @@
   <div class="good-de"><div v-html="goodData.content"></div></div>
   <!--商品页行动点-->
   <van-goods-action>
-    <van-goods-action-mini-btn icon="cart" text="购物车" @click="shopCart" :info="count"/>
-    <van-goods-action-big-btn text="加入购物车" @click="addShopCart" />
-    <van-goods-action-big-btn text="立即购买" @click="buyNow" primary />
+    <van-goods-action-mini-btn icon="cart" text="购物车" @click="shopCart" :info="cartFooterCount"/>
+    <van-goods-action-big-btn text="立即购买" @click="addShopCart" />
+    <!--<van-goods-action-big-btn text="立即购买" @click="buyNow" primary />-->
   </van-goods-action>
 </div>
 </template>
 
 <script>
-import { GOODS_DETAIL, CART_ADD } from '@/api/api-type'
+import { mapGetters } from 'vuex'
+import { GOODS_DETAIL, CART_ADD, CART_LIST } from '@/api/api-type'
 export default {
   name: 'GoodsDetail',
   data() {
@@ -37,11 +38,17 @@ export default {
       goodId: this.$route.query.goodId,
       goodData: [],
       selectVal: 1, // 进步器默认值
-      count: ''
+      count: this.$store.state.cartFooterCount
     }
   },
   created () {
-    this.initData()
+    this.initData();
+    this.cartCount()
+  },
+  computed: {
+    ...mapGetters([
+      'cartFooterCount'
+    ])
   },
   methods: {
     // 初始化页面数据
@@ -51,12 +58,17 @@ export default {
         console.log(res.data.data)
       })
     },
+    cartCount() {
+      this.$axios.post(CART_LIST, {token: this.token, page: 1, pagesize: 2}).then(res => {
+        this.$store.state.cartFooterCount = res.data.data.count
+      })
+    },
     // 添加商品
     addGood(goodId) {
-      console.log(this.selectVal)
       this.$axios.post(CART_ADD, {goods_id: goodId, token: this.token, num: this.selectVal}).then(res => {
-        this.count = this.selectVal
-        console.log(res.data.data)
+        if (res.data.error_code == 0) {
+          this.cartCount()
+        }
       })
     },
     // 购物车
@@ -176,6 +188,9 @@ export default {
   }
   .van-button--bottom-action.van-button--primary{
     background-color: #f44;
+  }
+  .van-goods-action-mini-btn{
+    min-width: 50%;
   }
 }
 </style>
