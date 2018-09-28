@@ -21,8 +21,8 @@
   <!--商品页行动点-->
   <van-goods-action>
     <van-goods-action-mini-btn icon="cart" text="购物车" @click="shopCart" :info="cartFooterCount"/>
-    <van-goods-action-big-btn text="立即购买" @click="addShopCart" />
-    <!--<van-goods-action-big-btn text="立即购买" @click="buyNow" primary />-->
+    <van-goods-action-big-btn text="加入购物车" @click="addShopCart(goodData.id)" />
+    <van-goods-action-big-btn text="立即购买" @click="buyNow" primary />
   </van-goods-action>
 </div>
 </template>
@@ -81,7 +81,14 @@ export default {
       })
     },
     // 加入购物车
-    addShopCart() {},
+    addShopCart(goodId) {
+      this.$axios.post(CART_ADD, {goods_id: goodId, token: this.token, num: 1}).then(res => {
+        if (res.data.error_code == 0) {
+          this.$toast('已成功加入购物车~')
+          this.cartCount()
+        }
+      })
+    },
     // 立即购买
     buyNow() {
       this.$router.push({
@@ -189,8 +196,8 @@ export default {
   .van-button--bottom-action.van-button--primary{
     background-color: #f44;
   }
-  .van-goods-action-mini-btn{
-    min-width: 50%;
-  }
+  /*.van-goods-action-mini-btn{*/
+    /*min-width: 50%;*/
+  /*}*/
 }
 </style>

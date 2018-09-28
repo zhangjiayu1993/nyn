@@ -39,9 +39,11 @@ export default {
       this.showDelete = true;
       this.isEdit = true
     }
+    // console.log(this.editAddr)
   },
   methods: {
     onSave(content) {
+      // console.log(typeof content.areaCode)
       let param = {}
       param = {
         token: this.token,
@@ -54,8 +56,8 @@ export default {
         name: content.name,
         areaCode: content.areaCode
       };
-      // 添加地址
       if (!this.isEdit) {
+        // 添加地址
         this.$axios.post(ADDRESS_ADD, param).then(res => {
           if (res.data.error_code == 0) {
             this.$toast('保存成功！');

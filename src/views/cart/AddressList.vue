@@ -36,7 +36,7 @@ export default {
           obj.province = result[i].prov;
           obj.county = result[i].area;
           obj.addressDetail = result[i].address;
-          obj.areaCode = result[i].areaCode; // 地址代码  需要后台增加字段
+          obj.areaCode = result[i].areaCode.toString(); // 地址代码  需要后台增加字段 必须为字符串
           obj.name = result[i].name;
           obj.tel = result[i].mobile;
           this.list.push(obj)

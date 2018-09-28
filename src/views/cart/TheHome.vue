@@ -2,26 +2,28 @@
   <div class="wraper cart">
     <ul class="cart-list-con">
       <li v-if="cartLisLCount > 0">
-        <van-swipe-cell :right-width="65" v-for="(item, index) in cartList" :key="index">
-          <van-checkbox v-model="checked"></van-checkbox>
-          <van-card
-            :title="item.get_goods.title"
-            :desc="item.get_goods.desc"
-            :thumb="item.get_goods.thumb"
-          >
-            <div slot="footer">
-              <span class="price">￥{{item.get_goods.price}}</span>
-              <van-stepper v-model="item.num" @change="changeCount(item.id, item.num)"/>
-            </div>
-          </van-card>
-          <span slot="right" @click="deleteCart(item.id)">删除</span>
-        </van-swipe-cell>
+        <van-checkbox-group v-model="checkResult" @change="selectGood">
+          <van-swipe-cell :right-width="65" v-for="(item, index) in cartList" :key="index">
+            <van-checkbox :name="item" ></van-checkbox>
+            <van-card
+              :title="item.get_goods.title"
+              :desc="item.get_goods.desc"
+              :thumb="item.get_goods.thumb"
+            >
+              <div slot="footer">
+                <span class="price">￥{{item.get_goods.price}}</span>
+                <van-stepper v-model="item.num" @change="changeCount(item.id, item.num)"/>
+              </div>
+            </van-card>
+            <span slot="right" @click="deleteCart(item.id)">删除</span>
+          </van-swipe-cell>
+        </van-checkbox-group>
       </li>
       <li v-else class="no-good">购物车空空如也~快去选择心仪的宝贝吧~~</li>
     </ul>
     <!--底部提交订单-->
     <van-submit-bar
-      :price="3050"
+      :price="totalPrice"
       button-text="提交订单"
       @submit="onSubmit"
     >
@@ -49,7 +51,8 @@ export default {
         pagesize: 5
       },
       cartList: [], // 购物车列表
-      cartLisLCount: 0 // 购物车商品数量
+      cartLisLCount: 0, // 购物车商品数量
+      checkResult: [] //
     }
   },
   created () {
@@ -58,6 +61,11 @@ export default {
   watch: {
     cartLisLCount: function (val, oldval) {
       return val
+    }
+  },
+  computed: {
+    totalPrice() {
+      return 100
     }
   },
   methods: {
@@ -94,12 +102,25 @@ export default {
     changeCount(id, val) {
       console.log(1)
       console.log(val)
-      this.$axios.post(CART_UPDATE, {token: this.token, cart_id: id, num: 5}).then(res => {
+      this.$axios.post(CART_UPDATE, {token: this.token, cart_id: id, num: val}).then(res => {
         console.log(res)
         if (res.data.error_code == 0) {
           this.cartList.num = val
         }
       })
+    },
+    // 选择商品
+    selectGood() {
+      let res = this.checkResult
+      // let allPrice = 0
+      // let num = 0
+      for (let key in res) {
+        console.log(key)
+        // let num = 0
+        // let price = 0
+        // num = res[key].num
+        // price = res[key].get_goods.price
+      }
     },
     // 提交订单
     onSubmit() {
