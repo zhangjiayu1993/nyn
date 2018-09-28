@@ -37,8 +37,7 @@ export default {
       token: this.$store.state.token,
       goodId: this.$route.query.goodId,
       goodData: [],
-      selectVal: 1, // 进步器默认值
-      count: this.$store.state.cartFooterCount
+      selectVal: 1 // 进步器默认值
     }
   },
   created () {
@@ -58,6 +57,7 @@ export default {
         console.log(res.data.data)
       })
     },
+    // 计算购物车商品数量
     cartCount() {
       this.$axios.post(CART_LIST, {token: this.token, page: 1, pagesize: 2}).then(res => {
         this.$store.state.cartFooterCount = res.data.data.count

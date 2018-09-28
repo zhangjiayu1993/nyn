@@ -18,15 +18,19 @@
   </div>
   <!--已选择的商品-->
   <div class="order-selected">
-    <van-card
-      title="3"
-      desc="3"
-      :thumb="url">
-      <div slot="footer">
-        <span class="price">￥<i>3.00</i></span>
-        <span class="number">X2</span>
-      </div>
-    </van-card>
+    <ul>
+      <li v-for="(item, index) in cartAcountData" :key="index">
+      <van-card
+        :title="item.get_goods.title"
+        :desc="item.get_goods.desc"
+        :thumb="item.get_goods.thumb">
+        <div slot="footer">
+          <span class="price">￥<i>{{item.get_goods.price}}</i></span>
+          <span class="number">X{{item.num}}</span>
+        </div>
+      </van-card>
+      </li>
+    </ul>
   </div>
   <van-checkbox v-model="agree">我同意<i>《美锦商城用户服务协议》</i></van-checkbox>
   <!--立即支付-->
@@ -39,7 +43,7 @@
 </template>
 
 <script>
-import { ADDRESS_LIST } from '@/api/api-type';
+import { ADDRESS_LIST, CART_DETAIL } from '@/api/api-type';
 export default {
   name: 'FillingOrder',
   data () {
@@ -48,7 +52,9 @@ export default {
       addrSelected: this.$route.params,
       token: this.$store.state.token,
       isAddrSeclected: false,
-      addrLen: 0 // 是否有已添加的地址
+      addrLen: 0, // 是否有已添加的地址
+      cartId: this.$route.params.cartId,
+      cartAcountData: []
     }
   },
   created() {
@@ -59,6 +65,11 @@ export default {
     }
     this.$axios.post(ADDRESS_LIST, {token: this.token, page: 1, pagesize: 10}).then(res => {
       this.addrLen = res.data.data.data.length
+    })
+    // 结算购物车列表详情
+    this.$axios.post(CART_DETAIL, {token: this.token, cart_id: this.cartId}).then(res => {
+      this.cartAcountData = res.data.data
+      console.log(res)
     })
   },
   methods: {
@@ -125,6 +136,9 @@ export default {
       background-color: #ed4e16;
       border-color: #ed4e16;
     }
+  }
+  .van-card{
+    margin-top: 10px;
   }
 }
 </style>

@@ -41,7 +41,6 @@ export default {
   created() {
     this.$axios.post(CART_LIST, {token: this.token, page: 1, pagesize: 2}).then(res => {
       this.$store.state.cartFooterCount = res.data.data.count
-      console.log(222)
     })
   }
 }

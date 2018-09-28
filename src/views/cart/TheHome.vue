@@ -27,7 +27,7 @@
       button-text="提交订单"
       @submit="onSubmit"
     >
-      <van-checkbox v-model="allChecked">全选</van-checkbox>
+      <van-checkbox v-model="checked" @change="checkedAll">全选</van-checkbox>
     </van-submit-bar>
     <!--底部导航-->
     <TheFooter :selected="selected"></TheFooter>
@@ -43,8 +43,7 @@ export default {
   data() {
     return {
       selected: 2,
-      checked: [],
-      allChecked: [],
+      checked: true,
       token: this.$store.state.token,
       param: {
         page: 1,
@@ -52,20 +51,17 @@ export default {
       },
       cartList: [], // 购物车列表
       cartLisLCount: 0, // 购物车商品数量
-      checkResult: [] //
+      checkResult: [], // 复选框选择结果
+      totalPrice: 0,
+      cartId: [] // 订单提交id存储
     }
   },
   created () {
-    this.initData()
+    this.initData();
   },
   watch: {
     cartLisLCount: function (val, oldval) {
       return val
-    }
-  },
-  computed: {
-    totalPrice() {
-      return 100
     }
   },
   methods: {
@@ -76,6 +72,8 @@ export default {
           this.cartLisLCount = res.data.data.count
           this.$store.state.cartFooterCount = res.data.data.count
           this.cartList = res.data.data.data
+          this.checkResult = this.cartList
+          this.calcuteTotalPrice()
         } else {
           this.cartLisLCount = 0
           this.$store.state.cartFooterCount = ''
@@ -94,36 +92,61 @@ export default {
             this.$toast('删除失败~')
           }
           this.initData()
-          // setTimeout(this.initData(), 500)
         })
       });
     },
     // 修改订单数目
     changeCount(id, val) {
-      console.log(1)
-      console.log(val)
+      this.totalPrice = 0
       this.$axios.post(CART_UPDATE, {token: this.token, cart_id: id, num: val}).then(res => {
-        console.log(res)
         if (res.data.error_code == 0) {
-          this.cartList.num = val
+          // 计算总金额
+          this.calcuteTotalPrice()
         }
       })
     },
     // 选择商品
     selectGood() {
-      let res = this.checkResult
-      // let allPrice = 0
-      // let num = 0
-      for (let key in res) {
-        console.log(key)
-        // let num = 0
-        // let price = 0
-        // num = res[key].num
-        // price = res[key].get_goods.price
+      let checkedLength = this.checkResult.length
+      let cartLength = this.cartLisLCount
+      if (checkedLength == cartLength) {
+        this.checked = true
       }
+      if (checkedLength == 0) {
+        this.checked = false
+      }
+      // 计算总金额
+      this.calcuteTotalPrice()
+    },
+    // 全选全不选
+    checkedAll() {
+      if (this.checked) {
+        this.checkResult = this.cartList
+      } else {
+        this.checkResult = []
+      }
+    },
+    // 计算总金额
+    calcuteTotalPrice () {
+      let res = this.checkResult;
+      let price = 0;
+      this.cartId = []
+      for (let i = 0; i < res.length; i++) {
+        price += res[i].num * res[i].get_goods.price * 100
+        this.cartId.push(res[i].id)
+      }
+      console.log(this.cartId)
+      this.totalPrice = price
     },
     // 提交订单
     onSubmit() {
+      this.$router.push({
+        path: '/fillingorder',
+        name: 'FillingOrder',
+        params: {
+          cartId: this.cartId
+        }
+      })
     }
   }
 }
