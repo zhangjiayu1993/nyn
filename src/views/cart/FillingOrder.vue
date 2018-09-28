@@ -35,7 +35,7 @@
   <van-checkbox v-model="agree">我同意<i>《美锦商城用户服务协议》</i></van-checkbox>
   <!--立即支付-->
   <van-submit-bar
-    :price="3050"
+    :price="price"
     button-text="立即支付"
     @submit="onSubmit"
   />
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { ADDRESS_LIST, CART_DETAIL } from '@/api/api-type';
+import { ADDRESS_LIST, CART_DETAIL, ADDRESS_STATUS } from '@/api/api-type';
 export default {
   name: 'FillingOrder',
   data () {
@@ -53,8 +53,9 @@ export default {
       token: this.$store.state.token,
       isAddrSeclected: false,
       addrLen: 0, // 是否有已添加的地址
-      cartId: this.$route.params.cartId,
-      cartAcountData: []
+      cartId: this.$store.state.cartId, // 购物车id
+      cartAcountData: [],
+      price: 0
     }
   },
   created() {
@@ -69,8 +70,13 @@ export default {
     // 结算购物车列表详情
     this.$axios.post(CART_DETAIL, {token: this.token, cart_id: this.cartId}).then(res => {
       this.cartAcountData = res.data.data
-      console.log(res)
-    })
+      let result = res.data.data
+      for (let i in result) {
+        this.price += result[i].num * result[i].get_goods.price * 100
+      }
+    });
+    // 默认地址
+    this.$axios.post(ADDRESS_STATUS, {token: this.token})
   },
   methods: {
     onSubmit() {},

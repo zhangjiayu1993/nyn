@@ -27,7 +27,7 @@
       button-text="提交订单"
       @submit="onSubmit"
     >
-      <van-checkbox v-model="checked" @change="checkedAll">全选</van-checkbox>
+      <van-checkbox v-model="checked" @change="checkedAll" @click="a">全选</van-checkbox>
     </van-submit-bar>
     <!--底部导航-->
     <TheFooter :selected="selected"></TheFooter>
@@ -111,20 +111,30 @@ export default {
       let cartLength = this.cartLisLCount
       if (checkedLength == cartLength) {
         this.checked = true
-      }
-      if (checkedLength == 0) {
+      } else {
         this.checked = false
       }
       // 计算总金额
       this.calcuteTotalPrice()
     },
     // 全选全不选
-    checkedAll() {
+    checkedAll(flag) {
+      console.log(111111111111)
+      let checkedLength = this.checkResult.length
+      let cartLength = this.cartLisLCount
       if (this.checked) {
         this.checkResult = this.cartList
       } else {
-        this.checkResult = []
+        if (checkedLength == 0) {
+          this.checkResult = []
+        }
+        if (checkedLength == cartLength) {
+          this.checkResult = []
+        }
       }
+    },
+    a() {
+      console.log('aaaaaaaaaaaa')
     },
     // 计算总金额
     calcuteTotalPrice () {
@@ -135,6 +145,7 @@ export default {
         price += res[i].num * res[i].get_goods.price * 100
         this.cartId.push(res[i].id)
       }
+      this.$store.state.cartId = this.cartId
       console.log(this.cartId)
       this.totalPrice = price
     },
@@ -142,10 +153,10 @@ export default {
     onSubmit() {
       this.$router.push({
         path: '/fillingorder',
-        name: 'FillingOrder',
-        params: {
-          cartId: this.cartId
-        }
+        name: 'FillingOrder'
+        // params: {
+        //   cartId: this.cartId
+        // }
       })
     }
   }

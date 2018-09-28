@@ -10,7 +10,8 @@ const state = {
   users: {},
   dataChange: false,
   token: '5cc915c437c43fb8129c2437db72d734', // token
-  cartFooterCount: 0 // 页脚购物车显示的数量（按照购物的种类来区分）
+  cartFooterCount: 0, // 页脚购物车显示的数量（按照购物的种类来区分）
+  cartId: [] // 结算购物车ID
 }
 const mutations = {
   cartFooterCount(state, data) {

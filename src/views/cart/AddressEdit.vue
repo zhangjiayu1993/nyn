@@ -6,6 +6,7 @@
     :address-info="addressInfo"
     @save="onSave"
     @delete="onDelete"
+    show-set-default
     delete-button-text="删除地址"
     save-button-text="确定"
   ></van-address-edit>
@@ -43,7 +44,7 @@ export default {
   },
   methods: {
     onSave(content) {
-      // console.log(typeof content.areaCode)
+      console.log(content)
       let param = {}
       param = {
         token: this.token,
@@ -51,7 +52,7 @@ export default {
         city: content.city,
         area: content.county,
         address: content.addressDetail,
-        status: 0,
+        status: content.isDefault ? 1 : 0,
         mobile: content.tel,
         name: content.name,
         areaCode: content.areaCode
@@ -71,7 +72,6 @@ export default {
         })
       } else {
         // 修改地址
-        console.log(content)
         param.address_id = content.id
         this.$axios.post(ADDRESS_UPDATE, param).then(res => {
           if (res.data.error_code == 0) {
