@@ -19,90 +19,146 @@ const PaySucess = () => import('@/views/cart/PaySucess')
 const PayFailed = () => import('@/views/cart/PayFailed')
 const TheAgreement = () => import('@/views/cart/TheAgreement')
 
-Vue.use(Router)
+Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
       name: 'TheHome',
-      component: TheIndex
+      component: TheIndex,
+      meta: {
+        title: '国匀和香'
+      }
     },
     {
       path: '/my',
       name: 'TheMy',
-      component: TheMy
+      component: TheMy,
+      meta: {
+        title: '个人中心'
+      }
     },
     {
       path: '/info',
       name: 'TheInfo',
-      component: TheInfo
+      component: TheInfo,
+      meta: {
+        title: '咨询'
+      }
     },
     {
       path: '/cart',
       name: 'TheCart',
-      component: TheCart
+      component: TheCart,
+      meta: {
+        title: '购物车'
+      }
     },
     {
       path: '/infodetail',
       name: 'InfoDetal',
-      component: InfoDetal
+      component: InfoDetal,
+      meta: {
+        title: '文章详情'
+      }
     },
     {
       path: '/goodslist',
       name: 'GoodsList',
-      component: GoodsList
+      component: GoodsList,
+      meta: {
+        title: '商品列表'
+      }
     },
     {
       path: '/goodsdetail',
       name: 'GoodsDetail',
-      component: GoodsDetail
+      component: GoodsDetail,
+      meta: {
+        title: '商品详情'
+      }
     },
     {
       path: '/aboutus',
       name: 'AboutUs',
-      component: AboutUs
+      component: AboutUs,
+      meta: {
+        title: '关于我们'
+      }
     },
     {
       path: '/addcontact',
       name: 'AddContact',
-      component: AddContact
+      component: AddContact,
+      meta: {
+        title: '商务合作'
+      }
     },
     {
       path: '/myorder',
       name: 'MyOrder',
-      component: MyOrder
+      component: MyOrder,
+      meta: {
+        title: '我的订单'
+      }
     },
     {
       path: '/fillingorder',
       name: 'FillingOrder',
-      component: FillingOrder
+      component: FillingOrder,
+      meta: {
+        title: '确认订单'
+      }
     },
     {
       path: '/addresslist',
       name: 'AddressList',
-      component: AddressList
+      component: AddressList,
+      meta: {
+        title: '地址列表'
+      }
     },
     {
       path: '/addressedit',
       name: 'AddressEdit',
-      component: AddressEdit
+      component: AddressEdit,
+      meta: {
+        title: '填写收货地址'
+      }
     },
     {
       path: '/paysucess',
       name: 'PaySucess',
-      component: PaySucess
+      component: PaySucess,
+      meta: {
+        title: '支付成功'
+      }
     },
     {
       path: '/payfailed',
       name: 'PayFailed',
-      component: PayFailed
+      component: PayFailed,
+      meta: {
+        title: '支付失败'
+      }
     },
     {
       path: '/agreement',
       name: 'TheAgreement',
-      component: TheAgreement
+      component: TheAgreement,
+      meta: {
+        title: '用户协议'
+      }
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
+export default router
