@@ -1,24 +1,31 @@
 <template>
 <div class="wraper">
   <ul v-if="orderLen > 0">
-    <li class="order" v-for="(items, index) in orderData" :key="index">
-      <div class="top">订单号：{{items.sn}}</div>
-      <div v-for="(item, index) in items.get_goods" :key="index">
-        <van-card
-          :title="item.title"
-          :desc="item.desc"
-          :thumb="item.thumb" >
-          <div slot="footer">
-            <span class="price">￥<i>{{item.price}}</i></span>
-            <span class="number">X{{item.num}}</span>
-          </div>
-        </van-card>
-      </div>
-      <van-row class="bottom">
-        <van-col span="20">运单号：{{items.logistics}}</van-col>
-        <van-col span="4">{{items.status | deliverStatus}}</van-col>
-      </van-row>
-    </li>
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      :loading-text="'加载中~'"
+      @load="onLoad"
+    >
+      <li class="order" v-for="(items, index) in orderData" :key="index">
+        <div class="top">订单号：{{items.sn}}</div>
+        <div v-for="(item, index) in items.get_goods" :key="index">
+          <van-card
+            :title="item.title"
+            :desc="item.desc"
+            :thumb="item.thumb" >
+            <div slot="footer">
+              <span class="price">￥<i>{{item.price}}</i></span>
+              <span class="number">X{{item.num}}</span>
+            </div>
+          </van-card>
+        </div>
+        <van-row class="bottom">
+          <van-col span="20">运单号：{{items.logistics}}</van-col>
+          <van-col span="4">{{items.status | deliverStatus}}</van-col>
+        </van-row>
+      </li>
+    </van-list>
   </ul>
   <div v-else class="no-data">~暂无订单，小主快去选购商品吧~</div>
 </div>
@@ -33,10 +40,12 @@ export default {
       param: {
         token: this.$store.state.token,
         page: 1,
-        pagesize: 9
+        pagesize: 3
       },
       orderData: [],
-      orderLen: 0
+      orderLen: 0,
+      loading: false,
+      finished: false
     }
   },
   created() {
@@ -58,10 +67,32 @@ export default {
   methods: {
     initData() {
       this.$axios.post(ORDER_LIST, this.param).then(res => {
-        this.orderLen = res.data.data.count
-        this.orderData = res.data.data.data
-        console.log(this.orderData[0].get_goods[0].title)
+        if (res.data.error_code == 0) {
+          this.orderLen = res.data.data.count
+          this.orderData = res.data.data.data
+        } else {
+          this.$toast(res.data.error_msg)
+        }
       })
+    },
+    onLoad() {
+      let _this = this;
+      setTimeout(() => {
+        let listParm = {
+          token: _this.$store.state.token,
+          page: _this.param.page + 1,
+          pagesize: 3
+        }
+        this.$axios.post(ORDER_LIST, listParm).then(res => {
+          _this.orderData = _this.orderData.concat(res.data.data.data)
+          _this.totalPage = res.data.data.total_page
+          _this.loading = false
+          _this.param.page++
+        })
+        if (_this.param.page >= _this.totalPage) {
+          _this.finished = true;
+        }
+      }, 500);
     }
   }
 }
@@ -109,6 +140,12 @@ export default {
       padding: 5px 15px;
       /*border-top: 1px solid #eee;*/
     }
+  }
+  .no-data{
+    font-size: 0.24rem;
+    color: #999;
+    text-align: center;
+    margin-top: 50%;
   }
 }
 </style>

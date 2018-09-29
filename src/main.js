@@ -11,7 +11,15 @@ import './assets/css/bass.less'
 import './api'
 import Vant from 'vant'
 import 'vant/lib/vant-css/index.css'
+// import axios from 'axios'
+// import { LOGIN } from '@/api/api-type'
+
 Vue.use(Vant)
+
+// 登录
+// axios.post(LOGIN).then(res => {
+//   console.log(res)
+// })
 
 // Vue.prototype.qs = qs
 Vue.config.productionTip = false

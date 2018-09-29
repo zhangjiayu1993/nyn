@@ -159,6 +159,15 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
+  let token = window.localStorage.getItem('TOKEN');
+  console.log(token)
+  if (token == null) {
+    router.push({
+      name: 'TheHome'
+    })
+  }
   next()
+  // console.log('before route to ');
+  // console.log(to);
 })
 export default router

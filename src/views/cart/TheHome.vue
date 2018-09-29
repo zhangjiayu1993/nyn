@@ -90,6 +90,10 @@ export default {
           }
         } else {
           this.$toast(res.data.error_msg)
+          this.totalPrice = 0
+          this.$store.state.cartFooterCount = ''
+          this.checked = false;
+          this.isSubmit = true
         }
       })
     },

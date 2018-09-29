@@ -46,6 +46,7 @@ export default {
     this.$axios.post(LOGIN).then(res => {
       console.log(res)
     })
+    this.setToken()
   },
   methods: {
     initData() {
@@ -53,6 +54,18 @@ export default {
         this.categoryData = res.data.data.data
         console.log(this.categoryData)
       })
+    },
+    setToken() {
+      let storage = window.localStorage
+      // let url = window.location.href + 'token=5cc915c437c43fb8129c2437db72d734';
+      let url = window.location.href;
+      let start = url.lastIndexOf('token')
+      let TOKEN = ''
+      if (start !== -1) {
+        TOKEN = url.substr(url.lastIndexOf('token') + 6);
+      }
+      storage.setItem('TOKEN', TOKEN)
+      console.log(url.lastIndexOf('token'))
     }
   }
 }

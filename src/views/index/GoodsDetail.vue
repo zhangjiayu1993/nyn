@@ -90,6 +90,8 @@ export default {
         if (res.data.error_code == 0) {
           this.$toast('已成功加入购物车~')
           this.cartCount()
+        } else {
+          this.$toast(res.data.error_msg)
         }
       })
     },
@@ -100,6 +102,8 @@ export default {
       this.$axios.post(CART_ADD, {goods_id: goodId, token: this.token, num: this.selectVal}).then(res => {
         if (res.data.error_code == 0) {
           this.cartCount()
+        } else {
+          this.$toast(res.data.error_msg)
         }
       })
     }

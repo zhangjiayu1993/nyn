@@ -49,8 +49,12 @@ export default {
   methods: {
     initData() {
       this.$axios.post(USER_DETAIL, {token: this.token}).then(res => {
-        this.listData = res.data.data
-        console.log(this.listData)
+        if (res.data.error_code == 0) {
+          this.listData = res.data.data
+        } else {
+          this.$toast(res.data.error_msg)
+        }
+        // console.log(this.listData)
       })
     }
   }
