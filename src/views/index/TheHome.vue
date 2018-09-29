@@ -45,7 +45,8 @@ export default {
     // 登录
     this.$axios.post(LOGIN).then(res => {
       console.log(res)
-    })
+    });
+    // 设置token
     this.setToken()
   },
   methods: {
