@@ -26,6 +26,7 @@
       :price="totalPrice"
       button-text="提交订单"
       @submit="onSubmit"
+      :disabled="isSubmit"
     >
       <van-checkbox v-model="checked" @change="checkedAll">全选</van-checkbox>
     </van-submit-bar>
@@ -53,7 +54,8 @@ export default {
       cartLisLCount: 0, // 购物车商品数量
       checkResult: [], // 复选框选择结果
       totalPrice: 0,
-      cartId: [] // 订单提交id存储
+      cartId: [], // 订单提交id存储
+      isSubmit: false // 是否可提交订单
     }
   },
   created () {
@@ -73,11 +75,19 @@ export default {
           this.$store.state.cartFooterCount = res.data.data.count
           this.cartList = res.data.data.data
           this.checkResult = this.cartList
+          if (this.cartLisLCount == 0) {
+            this.checked = false;
+            this.isSubmit = true
+          }
           this.calcuteTotalPrice()
         } else if (res.data.error_code == 5203) {
           this.cartLisLCount = 0
           this.$store.state.cartFooterCount = ''
           this.totalPrice = 0
+          if (this.cartLisLCount == 0) {
+            this.checked = false;
+            this.isSubmit = true
+          }
         } else {
           this.$toast(res.data.error_msg)
         }
@@ -162,6 +172,10 @@ export default {
   .van-button--danger{
     background-color: #1c1d1d;
     border-color: #1c1d1d;
+  }
+  .van-button--disabled{
+    background-color: #999999;
+    color: #fff;
   }
   /*checkbox 颜色修改*/
   .van-checkbox__icon--checked .van-icon{

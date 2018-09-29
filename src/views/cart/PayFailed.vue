@@ -3,8 +3,8 @@
     <div class="container">
       <img src="./zf_sb_iocn.png" class="image">
       <div class="word">您的订单支付失败，请重试</div>
-      <router-link to="/" tag="div" class="btn">查看订单</router-link>
-      <router-link to="/" tag="div" class="btn plain">查看订单</router-link>
+      <router-link to="myorder" tag="div" class="btn">查看订单</router-link>
+      <router-link to="/" tag="div" class="btn plain">再等等</router-link>
     </div>
   </div>
 </template>

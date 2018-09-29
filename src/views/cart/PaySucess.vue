@@ -3,7 +3,7 @@
   <div class="container">
     <img src="./zf_cg_iocn.png" class="image">
     <div class="word">您已成功提交订单</div>
-    <router-link to="/" tag="div" class="btn">查看订单</router-link>
+    <router-link to="/myorder" tag="div" class="btn">查看订单</router-link>
   </div>
 </div>
 </template>

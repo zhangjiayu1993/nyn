@@ -27,7 +27,7 @@ export default {
     initData() {
       this.$axios.post(INFO_DETAIL, {info_id: this.infoId}).then(res => {
         this.infoData = res.data.data
-        console.log(res)
+        // console.log(res)
       })
     }
   }

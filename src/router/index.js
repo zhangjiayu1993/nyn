@@ -17,6 +17,7 @@ const AddressList = () => import('@/views/cart/AddressList')
 const AddressEdit = () => import('@/views/cart/AddressEdit')
 const PaySucess = () => import('@/views/cart/PaySucess')
 const PayFailed = () => import('@/views/cart/PayFailed')
+const TheAgreement = () => import('@/views/cart/TheAgreement')
 
 Vue.use(Router)
 
@@ -97,6 +98,11 @@ export default new Router({
       path: '/payfailed',
       name: 'PayFailed',
       component: PayFailed
+    },
+    {
+      path: '/agreement',
+      name: 'TheAgreement',
+      component: TheAgreement
     }
   ]
 })

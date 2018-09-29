@@ -22,7 +22,7 @@
   <van-goods-action>
     <van-goods-action-mini-btn icon="cart" text="购物车" @click="shopCart" :info="cartFooterCount"/>
     <van-goods-action-big-btn text="加入购物车" @click="addShopCart(goodData.id)" />
-    <van-goods-action-big-btn text="立即购买" @click="buyNow" primary />
+    <van-goods-action-big-btn text="立即购买" @click="buyNow(goodData.id)" primary />
   </van-goods-action>
 </div>
 </template>
@@ -37,7 +37,8 @@ export default {
       token: this.$store.state.token,
       goodId: this.$route.query.goodId,
       goodData: [],
-      selectVal: 1 // 进步器默认值
+      selectVal: 1, // 进步器默认值
+      isBuyNow: false // 是否立即购买
     }
   },
   created () {
@@ -60,24 +61,27 @@ export default {
     // 计算购物车商品数量
     cartCount() {
       this.$axios.post(CART_LIST, {token: this.token, page: 1, pagesize: 2}).then(res => {
-        this.$store.state.cartFooterCount = res.data.data.count
+        if (res.data.error_code == 0) {
+          let result = res.data.data;
+          this.$store.state.cartFooterCount = result.count;
+          // 是否点击立即购买，如果立即购买，页面跳转
+          if (this.isBuyNow) {
+            let cartId = [];
+            cartId.push(result.data[0].id);
+            this.$store.state.cartId = cartId;
+            this.$router.push({
+              path: '/fillingorder',
+              name: 'FillingOrder'
+            })
+          }
+        }
       })
     },
-    // // 添加商品
-    // addGood(goodId) {
-    //   this.$axios.post(CART_ADD, {goods_id: goodId, token: this.token, num: this.selectVal}).then(res => {
-    //     if (res.data.error_code == 0) {
-    //       this.cartCount()
-    //     }
-    //   })
-    // },
     // 购物车
     shopCart() {
       this.$router.replace({
         path: '/cart',
-        name: 'TheCart',
-        query: {
-        }
+        name: 'TheCart'
       })
     },
     // 加入购物车
@@ -90,10 +94,13 @@ export default {
       })
     },
     // 立即购买
-    buyNow() {
-      this.$router.push({
-        path: '/fillingorder',
-        name: 'FillingOrder'
+    buyNow(goodId) {
+      this.isBuyNow = true;
+      // 先加入购物车
+      this.$axios.post(CART_ADD, {goods_id: goodId, token: this.token, num: this.selectVal}).then(res => {
+        if (res.data.error_code == 0) {
+          this.cartCount()
+        }
       })
     }
   }

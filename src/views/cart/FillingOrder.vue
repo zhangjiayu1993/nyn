@@ -32,7 +32,10 @@
       </li>
     </ul>
   </div>
-  <van-checkbox v-model="agree">我同意<i>《美锦商城用户服务协议》</i></van-checkbox>
+  <div class="agree-con">
+    <van-checkbox v-model="agree"></van-checkbox>
+    <div class="agreement">我同意<router-link to="/agreement">《美锦商城用户服务协议》</router-link></div>
+  </div>
   <!--立即支付-->
   <van-submit-bar
     :price="price"
@@ -43,7 +46,7 @@
 </template>
 
 <script>
-import { ADDRESS_LIST, CART_DETAIL, ADDRESS_STATUS, ORDER_ADD, PAY_WECHAT } from '@/api/api-type';
+import { CART_DETAIL, ADDRESS_STATUS, ORDER_ADD, PAY_WECHAT } from '@/api/api-type';
 export default {
   name: 'FillingOrder',
   data () {
@@ -64,9 +67,6 @@ export default {
     }
   },
   created() {
-    this.$axios.post(ADDRESS_LIST, {token: this.token, page: 1, pagesize: 10}).then(res => {
-      this.addrLen = res.data.data.data.length
-    })
     // 结算购物车列表详情
     this.$axios.post(CART_DETAIL, {token: this.token, cart_id: this.cartId}).then(res => {
       this.cartAcountData = res.data.data
@@ -124,35 +124,35 @@ export default {
     },
     // 立即支付
     onSubmit() {
-      // this.$router.push({
-      //   path: '/paysucess',
-      //   name: 'PaySucess'
-      // })
-      this.$router.push({
-        path: '/payfailed',
-        name: 'PayFailed'
-      })
-      // let addrId = this.addrSelected.id
-      // let orderId = 0
-      // if (this.agree) {
-      //   this.$axios.post(ORDER_ADD, {token: this.token, address_id: addrId, cart_id: this.cartId}).then(res => {
-      //     if (res.data.error_code == 0) {
-      //       orderId = res.data.data.id
-      //       this.pay(orderId)
-      //     }
-      //   });
-      // } else {
-      //   this.$dialog.alert({
-      //     message: '请阅读同意《美锦商城用户服务协议》'
-      //   })
-      // }
+      let addrId = this.addrSelected.id
+      let orderId = 0
+      if (this.agree) {
+        this.$axios.post(ORDER_ADD, {token: this.token, address_id: addrId, cart_id: this.cartId}).then(res => {
+          if (res.data.error_code == 0) {
+            orderId = res.data.data.id
+            this.pay(orderId)
+          }
+        });
+      } else {
+        this.$dialog.alert({
+          message: '请阅读同意《美锦商城用户服务协议》'
+        })
+      }
     },
     pay(id) {
       this.$axios.post(PAY_WECHAT, {token: this.token, order_id: id}).then(res => {
         if (res.data.error_code == 0) {
-          console.log(res)
+          this.$router.push({
+            path: '/paysucess',
+            name: 'PaySucess'
+          })
+          // console.log(res)
         } else {
-          console.log(res)
+          this.$router.push({
+            path: '/payfailed',
+            name: 'PayFailed'
+          })
+          // console.log(res)
         }
       })
     }
@@ -192,9 +192,7 @@ export default {
   .van-checkbox{
     padding: 15px;
     font-size: 0.26rem;
-    span i{
-      color: #ed4e16;
-    }
+    display: inline-block;
     .van-checkbox__icon--checked .van-icon{
       background-color: #ed4e16;
       border-color: #ed4e16;
@@ -209,6 +207,15 @@ export default {
 .wraper{
   min-height: 100%;
   background-color: #f4f4f4;
+  .agreement{
+    display: inline-block;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    overflow: hidden;
+    a{
+      color: #ed4e16;
+    }
+  }
   .add-address{
     width: 100%;
     display: -webkit-box;
