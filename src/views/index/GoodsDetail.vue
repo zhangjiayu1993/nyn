@@ -13,7 +13,7 @@
     </div>
     <div class="select-num">
       <span class="tip">数量选择</span>
-      <span class="steper"><van-stepper v-model="selectVal" @change="addGood(goodData.id)"/></span>
+      <span class="steper"><van-stepper v-model="selectVal"/></span>
     </div>
   </div>
   <div class="headline"><span><i class="iconfont icon-tupian"></i>商品详情</span></div>
@@ -63,14 +63,14 @@ export default {
         this.$store.state.cartFooterCount = res.data.data.count
       })
     },
-    // 添加商品
-    addGood(goodId) {
-      this.$axios.post(CART_ADD, {goods_id: goodId, token: this.token, num: this.selectVal}).then(res => {
-        if (res.data.error_code == 0) {
-          this.cartCount()
-        }
-      })
-    },
+    // // 添加商品
+    // addGood(goodId) {
+    //   this.$axios.post(CART_ADD, {goods_id: goodId, token: this.token, num: this.selectVal}).then(res => {
+    //     if (res.data.error_code == 0) {
+    //       this.cartCount()
+    //     }
+    //   })
+    // },
     // 购物车
     shopCart() {
       this.$router.replace({
@@ -82,7 +82,7 @@ export default {
     },
     // 加入购物车
     addShopCart(goodId) {
-      this.$axios.post(CART_ADD, {goods_id: goodId, token: this.token, num: 1}).then(res => {
+      this.$axios.post(CART_ADD, {goods_id: goodId, token: this.token, num: this.selectVal}).then(res => {
         if (res.data.error_code == 0) {
           this.$toast('已成功加入购物车~')
           this.cartCount()

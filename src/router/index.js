@@ -15,6 +15,8 @@ const MyOrder = () => import('@/views/my/MyOrder')
 const FillingOrder = () => import('@/views/cart/FillingOrder')
 const AddressList = () => import('@/views/cart/AddressList')
 const AddressEdit = () => import('@/views/cart/AddressEdit')
+const PaySucess = () => import('@/views/cart/PaySucess')
+const PayFailed = () => import('@/views/cart/PayFailed')
 
 Vue.use(Router)
 
@@ -85,6 +87,16 @@ export default new Router({
       path: '/addressedit',
       name: 'AddressEdit',
       component: AddressEdit
+    },
+    {
+      path: '/paysucess',
+      name: 'PaySucess',
+      component: PaySucess
+    },
+    {
+      path: '/payfailed',
+      name: 'PayFailed',
+      component: PayFailed
     }
   ]
 })

@@ -43,13 +43,18 @@
 </template>
 
 <script>
-import { ADDRESS_LIST, CART_DETAIL, ADDRESS_STATUS } from '@/api/api-type';
+import { ADDRESS_LIST, CART_DETAIL, ADDRESS_STATUS, ORDER_ADD, PAY_WECHAT } from '@/api/api-type';
 export default {
   name: 'FillingOrder',
   data () {
     return {
       agree: true,
-      addrSelected: this.$route.params,
+      addrSelected: {
+        name: '',
+        tel: '0',
+        address: ''
+      },
+      routefrom: this.$route.params.form,
       token: this.$store.state.token,
       isAddrSeclected: false,
       addrLen: 0, // 是否有已添加的地址
@@ -59,11 +64,6 @@ export default {
     }
   },
   created() {
-    if (JSON.stringify(this.addrSelected) == '{}') {
-      this.isAddrSeclected = true
-    } else {
-      this.isAddrSeclected = false
-    }
     this.$axios.post(ADDRESS_LIST, {token: this.token, page: 1, pagesize: 10}).then(res => {
       this.addrLen = res.data.data.data.length
     })
@@ -77,11 +77,31 @@ export default {
     });
     // 默认地址
     this.$axios.post(ADDRESS_STATUS, {token: this.token}).then(res => {
-      console.log(res.data)
+      let result = res.data.data
+      if (res.data.error_code == 0) {
+        this.isAddrSeclected = false
+        if (this.routefrom == 'addressList') {
+          this.addrSelected = this.$route.params.address
+        } else {
+          console.log(result)
+          this.addrSelected = {
+            address: result.prov + ' ' + result.city + ' ' + result.area,
+            name: result.name,
+            tel: result.mobile,
+            provice: result.prov,
+            city: result.city,
+            country: result.area,
+            areaCode: result.areaCode,
+            id: result.id
+          }
+        }
+      } else {
+        this.isAddrSeclected = true
+        this.addrSelected = {}
+      }
     })
   },
   methods: {
-    onSubmit() {},
     addAddress() {
       if (this.addrLen == 0) {
         this.$router.push({
@@ -96,9 +116,44 @@ export default {
       }
     },
     selectAddress() {
+      this.$store.state.chosenAddressId = this.addrSelected.id
       this.$router.push({
         path: '/addresslist',
         name: 'AddressList'
+      })
+    },
+    // 立即支付
+    onSubmit() {
+      // this.$router.push({
+      //   path: '/paysucess',
+      //   name: 'PaySucess'
+      // })
+      this.$router.push({
+        path: '/payfailed',
+        name: 'PayFailed'
+      })
+      // let addrId = this.addrSelected.id
+      // let orderId = 0
+      // if (this.agree) {
+      //   this.$axios.post(ORDER_ADD, {token: this.token, address_id: addrId, cart_id: this.cartId}).then(res => {
+      //     if (res.data.error_code == 0) {
+      //       orderId = res.data.data.id
+      //       this.pay(orderId)
+      //     }
+      //   });
+      // } else {
+      //   this.$dialog.alert({
+      //     message: '请阅读同意《美锦商城用户服务协议》'
+      //   })
+      // }
+    },
+    pay(id) {
+      this.$axios.post(PAY_WECHAT, {token: this.token, order_id: id}).then(res => {
+        if (res.data.error_code == 0) {
+          console.log(res)
+        } else {
+          console.log(res)
+        }
       })
     }
   }

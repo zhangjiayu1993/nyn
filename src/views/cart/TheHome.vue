@@ -150,9 +150,6 @@ export default {
       this.$router.push({
         path: '/fillingorder',
         name: 'FillingOrder'
-        // params: {
-        //   cartId: this.cartId
-        // }
       })
     }
   }

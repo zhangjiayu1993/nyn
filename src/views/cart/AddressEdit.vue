@@ -40,7 +40,7 @@ export default {
       this.showDelete = true;
       this.isEdit = true
     }
-    // console.log(this.editAddr)
+    console.log(this.editAddr)
   },
   methods: {
     onSave(content) {
@@ -73,6 +73,7 @@ export default {
       } else {
         // 修改地址
         param.address_id = content.id
+        console.log(param)
         this.$axios.post(ADDRESS_UPDATE, param).then(res => {
           if (res.data.error_code == 0) {
             this.$toast('地址修改成功！');
