@@ -142,19 +142,7 @@ export default {
     },
     pay(id) {
       this.$axios.post(PAY_WECHAT, {token: this.token, order_id: id}).then(res => {
-        // if (res.data.error_code == 0) {
-        //   this.$router.push({
-        //     path: '/paysucess',
-        //     name: 'PaySucess'
-        //   })
-        // } else {
-        //   this.$router.push({
-        //     path: '/payfailed',
-        //     name: 'PayFailed'
-        //   })
-        // }
         if (res.data.error_code === 0) {
-          debugger
           let data = JSON.parse(res.data.data)
           console.log(data);
           wx.chooseWXPay({
@@ -165,7 +153,6 @@ export default {
             paySign: data.paySign, // 支付签名
             success: function (res) {
               // 支付成功后的回调函数
-              debugger
               if (res.err_msg === 'get_brand_wcpay_request:ok') {
                 this.$router.push({
                   path: '/paysucess',
