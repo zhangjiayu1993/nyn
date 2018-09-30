@@ -47,6 +47,7 @@
 
 <script>
 import { CART_DETAIL, ADDRESS_STATUS, ORDER_ADD, PAY_WECHAT } from '@/api/api-type';
+import wx from 'weixin-js-sdk'
 export default {
   name: 'FillingOrder',
   data () {
@@ -58,7 +59,7 @@ export default {
         address: ''
       },
       routefrom: this.$route.params.form,
-      token: this.$store.state.token,
+      token: window.localStorage.getItem('TOKEN'),
       isAddrSeclected: false,
       addrLen: 0, // 是否有已添加的地址
       cartId: this.$store.state.cartId, // 购物车id
@@ -141,18 +142,43 @@ export default {
     },
     pay(id) {
       this.$axios.post(PAY_WECHAT, {token: this.token, order_id: id}).then(res => {
-        if (res.data.error_code == 0) {
-          this.$router.push({
-            path: '/paysucess',
-            name: 'PaySucess'
-          })
-          // console.log(res)
-        } else {
-          this.$router.push({
-            path: '/payfailed',
-            name: 'PayFailed'
-          })
-          // console.log(res)
+        // if (res.data.error_code == 0) {
+        //   this.$router.push({
+        //     path: '/paysucess',
+        //     name: 'PaySucess'
+        //   })
+        // } else {
+        //   this.$router.push({
+        //     path: '/payfailed',
+        //     name: 'PayFailed'
+        //   })
+        // }
+        if (res.data.error_code === 0) {
+          debugger
+          let data = JSON.parse(res.data.data)
+          console.log(data);
+          wx.chooseWXPay({
+            timestamp: data.timestamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
+            nonceStr: data.nonceStr, // 支付签名随机串，不长于 32 位
+            package: data.package, // 统一支付接口返回的prepay_id参数值，提交格式如：prepay_id=\*\*\*）
+            signType: data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
+            paySign: data.paySign, // 支付签名
+            success: function (res) {
+              // 支付成功后的回调函数
+              debugger
+              if (res.err_msg === 'get_brand_wcpay_request:ok') {
+                this.$router.push({
+                  path: '/paysucess',
+                  name: 'PaySucess'
+                })
+              } else {
+                this.$router.push({
+                  path: '/payfailed',
+                  name: 'PayFailed'
+                })
+              }
+            }
+          });
         }
       })
     }

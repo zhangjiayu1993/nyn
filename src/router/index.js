@@ -29,7 +29,7 @@ const router = new Router({
       name: 'TheHome',
       component: TheIndex,
       meta: {
-        title: '国匀和香'
+        title: '圆匀和香'
       }
     },
     {
@@ -45,7 +45,7 @@ const router = new Router({
       name: 'TheInfo',
       component: TheInfo,
       meta: {
-        title: '咨询'
+        title: '资讯'
       }
     },
     {
@@ -159,13 +159,13 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
-  let token = window.localStorage.getItem('TOKEN');
-  console.log(token)
-  if (token == null) {
-    router.push({
-      name: 'TheHome'
-    })
-  }
+  // let token = window.localStorage.getItem('TOKEN');
+  // console.log(token)
+  // if (token == null) {
+  //   router.push({
+  //     name: 'TheHome'
+  //   })
+  // }
   next()
   // console.log('before route to ');
   // console.log(to);

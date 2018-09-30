@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       param: {
-        token: this.$store.state.token,
+        token: window.localStorage.getItem('TOKEN'),
         page: 1,
         pagesize: 3
       },
@@ -79,7 +79,7 @@ export default {
       let _this = this;
       setTimeout(() => {
         let listParm = {
-          token: _this.$store.state.token,
+          token: window.localStorage.getItem('TOKEN'),
           page: _this.param.page + 1,
           pagesize: 3
         }

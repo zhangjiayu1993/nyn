@@ -12,7 +12,7 @@
             >
               <div slot="footer">
                 <span class="price">￥{{item.get_goods.price}}</span>
-                <van-stepper v-model="item.num" @change="changeCount(item.id, item.num)"/>
+                <van-stepper v-model="item.num"  @change="changeCount(item.id, item.num)"/>
               </div>
             </van-card>
             <span slot="right" @click="deleteCart(item.id)">删除</span>
@@ -45,7 +45,7 @@ export default {
     return {
       selected: 2,
       checked: true,
-      token: this.$store.state.token,
+      token: window.localStorage.getItem('TOKEN'),
       param: {
         page: 1,
         pagesize: 5

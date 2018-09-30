@@ -40,7 +40,7 @@ export default {
     return {
       selected: 3,
       listData: [],
-      token: this.$store.state.token
+      token: window.localStorage.getItem('TOKEN')
     }
   },
   created() {

@@ -6,7 +6,7 @@
         <i slot="icon" slot-scope="props" class="iconfont icon-home"></i>
       </van-tabbar-item>
       <van-tabbar-item to="/info">
-        <span>咨询</span>
+        <span>资讯</span>
         <i slot="icon" slot-scope="props" class="iconfont icon-info"></i>
       </van-tabbar-item>
       <van-tabbar-item to="/cart" :info="cartFooterCount">
@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       message: this.selected,
-      token: this.$store.state.token
+      token: window.localStorage.getItem('TOKEN')
     }
   },
   props: {

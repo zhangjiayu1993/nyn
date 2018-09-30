@@ -23,7 +23,7 @@ export default {
   data () {
     return {
       areaList,
-      token: this.$store.state.token,
+      token: window.localStorage.getItem('TOKEN'),
       editAddr: this.$route.params,
       isEdit: false, // 是否为修改地址
       addressInfo: {}, // 由地址列表进来的地址详情

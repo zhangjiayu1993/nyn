@@ -18,7 +18,7 @@ export default {
     return {
       chosenAddressId: this.$store.state.chosenAddressId,
       list: [], // 地址列表
-      token: this.$store.state.token,
+      token: window.localStorage.getItem('TOKEN'),
       addressId: this.$route.params.addressId,
       routeFrom: this.$route.params.comeform
     }

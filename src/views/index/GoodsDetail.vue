@@ -13,7 +13,7 @@
     </div>
     <div class="select-num">
       <span class="tip">数量选择</span>
-      <span class="steper"><van-stepper v-model="selectVal"/></span>
+      <span class="steper"><van-stepper v-model="selectVal" :max="99"/></span>
     </div>
   </div>
   <div class="headline"><span><i class="iconfont icon-tupian"></i>商品详情</span></div>
@@ -34,7 +34,7 @@ export default {
   name: 'GoodsDetail',
   data() {
     return {
-      token: this.$store.state.token,
+      token: window.localStorage.getItem('TOKEN'),
       goodId: this.$route.query.goodId,
       goodData: [],
       selectVal: 1, // 进步器默认值
