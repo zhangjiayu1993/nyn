@@ -29,7 +29,7 @@
 
 <script>
 import TheFooter from '../../components/TheFooter'
-import { ALL_CATEGORY, LOGIN } from '@/api/api-type'
+import { ALL_CATEGORY } from '@/api/api-type'
 export default {
   name: 'TheHome',
   components: {TheFooter},
@@ -41,16 +41,16 @@ export default {
     }
   },
   created () {
-    this.initData();
-    // 登录
-    this.$axios.post(LOGIN).then(res => {
-      console.log(res)
-    });
-    // 设置token
     let token = window.localStorage.getItem('TOKEN')
     if (!token) {
       this.setToken()
     }
+    this.initData();
+    // 登录
+    // this.$axios.post(LOGIN).then(res => {
+    //   console.log(res)
+    // });
+    // 设置token
   },
   methods: {
     initData() {
@@ -61,8 +61,8 @@ export default {
     },
     setToken() {
       let storage = window.localStorage
-      let url = window.location.href + 'token=e1d3e4ed56909f3bc4ceebea2222f557';
-      // let url = window.location.href;
+      // let url = window.location.href + 'token=992ba7626ab87bf180218e4c89a4f275';
+      let url = window.location.href;
       let start = url.lastIndexOf('token')
       let TOKEN = ''
       if (start !== -1) {

@@ -18,6 +18,7 @@ const AddressEdit = () => import('@/views/cart/AddressEdit')
 const PaySucess = () => import('@/views/cart/PaySucess')
 const PayFailed = () => import('@/views/cart/PayFailed')
 const TheAgreement = () => import('@/views/cart/TheAgreement')
+const TheLogin = () => import('@/views/Login')
 
 Vue.use(Router);
 
@@ -150,6 +151,14 @@ const router = new Router({
       component: TheAgreement,
       meta: {
         title: '用户协议'
+      }
+    },
+    {
+      path: '/login',
+      name: 'TheLogin',
+      component: TheLogin,
+      meta: {
+        title: '用户登陆'
       }
     }
   ]
