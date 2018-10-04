@@ -1,7 +1,7 @@
 /* ********************* request 全局配置文档 ************************/
 import Vue from 'vue'
 import axios from 'axios'
-import router from '../router'
+// import router from '../router'
 import qs from 'qs'
 import { Toast } from 'vant'
 
