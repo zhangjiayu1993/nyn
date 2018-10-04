@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     initData() {
-      this.$axios.post(ALL_CATEGORY, {token: this.token, page: 1, pagesize: 10}).then(res => {
+      this.$axios.post(ALL_CATEGORY, {token: window.localStorage.getItem('TOKEN'), page: 1, pagesize: 10}).then(res => {
         this.categoryData = res.data.data.data
         console.log(this.categoryData)
       })
