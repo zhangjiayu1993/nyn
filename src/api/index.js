@@ -105,7 +105,7 @@ $axios.interceptors.response.use(
       //     path: '/login'
       //   })
       // }, 1500)
-      window.location.href = 'http://mjwhqt.hjw988.com/api/login'
+      // window.location.href = 'http://mjwhqt.hjw988.com/api/login'
     } else {
       return response
     }
