@@ -41,10 +41,10 @@ export default {
     }
   },
   created () {
-    let token = window.localStorage.getItem('TOKEN')
-    if (!token) {
-      this.setToken()
-    }
+    // let token = window.localStorage.getItem('TOKEN')
+    // if (!token) {
+    this.setToken()
+    // }
     this.initData();
     // 登录
     // this.$axios.post(LOGIN).then(res => {
@@ -67,9 +67,8 @@ export default {
       let TOKEN = ''
       if (start !== -1) {
         TOKEN = url.substr(url.lastIndexOf('token') + 6);
+        storage.setItem('TOKEN', TOKEN)
       }
-      storage.setItem('TOKEN', TOKEN)
-      console.log(url.lastIndexOf('token'))
     }
   }
 }
