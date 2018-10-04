@@ -101,9 +101,10 @@ $axios.interceptors.response.use(
     if (response.data.error_code === 5002) {
       Toast(response.data.error_msg)
       setTimeout(function () {
-        router.replace({
-          path: '/login'
-        })
+        // router.replace({
+        //   path: '/login'
+        // })
+        window.location.href = 'http//:mjwhqt.hjw988.com/api/login'
       }, 1500)
     } else {
       return response
