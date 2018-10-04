@@ -100,12 +100,12 @@ $axios.interceptors.response.use(
     // 如果状态码是ES7008，表示token失效，则直接跳转到登录页面
     if (response.data.error_code === 5002) {
       Toast(response.data.error_msg)
-      setTimeout(function () {
-        // router.replace({
-        //   path: '/login'
-        // })
-        window.location.href = 'http//:mjwhqt.hjw988.com/api/login'
-      }, 1500)
+      // setTimeout(function () {
+      //   router.replace({
+      //     path: '/login'
+      //   })
+      // }, 1500)
+      window.location.href = 'http://mjwhqt.hjw988.com/api/login'
     } else {
       return response
     }

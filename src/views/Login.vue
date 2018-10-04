@@ -31,7 +31,7 @@ export default {
         self.$router.push({
           path: '/',
           query: {
-            token: '992ba7626ab87bf180218e4c89a4f275'
+            token: '695a29219d5cf1250023d0736bca7e9d'
           }
         })
       }, 1000)
