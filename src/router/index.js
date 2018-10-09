@@ -1,24 +1,39 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import TheIndex from '@/views/index/TheHome'
-
+import PaySucess from '@/views/cart/PaySucess'
+import PayFailed from '@/views/cart/PayFailed'
+import TheMy from '@/views/my/TheHome'
+import TheInfo from '@/views/info/TheHome'
+import InfoDetal from '@/views/info/InfoDetail'
+import TheCart from '@/views/cart/TheHome'
+import GoodsList from '@/views/index/GoodsList'
+import GoodsDetail from '@/views/index/GoodsDetail'
+import AboutUs from '@/views/my/AboutUs'
+import AddContact from '@/views/my/AddContact'
+import FillingOrder from '@/views/cart/FillingOrder'
+import MyOrder from '@/views/my/MyOrder'
+import AddressList from '@/views/cart/AddressList'
+import AddressEdit from '@/views/cart/AddressEdit'
+import TheAgreement from '@/views/cart/TheAgreement'
+import TheLogin from '@/views/Login'
 // 按需加载路由模块
-const TheMy = () => import('@/views/my/TheHome')
-const TheInfo = () => import('@/views/info/TheHome')
-const InfoDetal = () => import('@/views/info/InfoDetail')
-const TheCart = () => import('@/views/cart/TheHome')
-const GoodsList = () => import('@/views/index/GoodsList')
-const GoodsDetail = () => import('@/views/index/GoodsDetail')
-const AboutUs = () => import('@/views/my/AboutUs')
-const AddContact = () => import('@/views/my/AddContact')
-const MyOrder = () => import('@/views/my/MyOrder')
-const FillingOrder = () => import('@/views/cart/FillingOrder')
-const AddressList = () => import('@/views/cart/AddressList')
-const AddressEdit = () => import('@/views/cart/AddressEdit')
-const PaySucess = () => import('@/views/cart/PaySucess')
-const PayFailed = () => import('@/views/cart/PayFailed')
-const TheAgreement = () => import('@/views/cart/TheAgreement')
-const TheLogin = () => import('@/views/Login')
+// const TheMy = () => import('@/views/my/TheHome')
+// const TheInfo = () => import('@/views/info/TheHome')
+// const InfoDetal = () => import('@/views/info/InfoDetail')
+// const TheCart = () => import('@/views/cart/TheHome')
+// const GoodsList = () => import('@/views/index/GoodsList')
+// const GoodsDetail = () => import('@/views/index/GoodsDetail')
+// const AboutUs = () => import('@/views/my/AboutUs')
+// const AddContact = () => import('@/views/my/AddContact')
+// const MyOrder = () => import('@/views/my/MyOrder')
+// const FillingOrder = () => import('@/views/cart/FillingOrder')
+// const AddressList = () => import('@/views/cart/AddressList')
+// const AddressEdit = () => import('@/views/cart/AddressEdit')
+// const PaySucess = () => import('@/views/cart/PaySucess')
+// const PayFailed = () => import('@/views/cart/PayFailed')
+// const TheAgreement = () => import('@/views/cart/TheAgreement')
+// const TheLogin = () => import('@/views/Login')
 
 Vue.use(Router);
 

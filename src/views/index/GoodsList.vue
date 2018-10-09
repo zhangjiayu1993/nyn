@@ -7,7 +7,8 @@
     <van-list
       v-model="loading"
       :finished="finished"
-      :loading-text="'加载中~'"
+      :loading-text="loadingText"
+      :immediate-check="immediateCheck"
       @load="onLoad"
     >
     <ul class="goods">
@@ -42,6 +43,8 @@ export default {
       loading: false,
       finished: false,
       totalPage: 0,
+      immediateCheck: false,
+      loadingText: '加载中~',
       list: []
     }
   },
@@ -62,10 +65,16 @@ export default {
   methods: {
     initData(param) {
       this.$axios.post(GOODS_LIST, param).then(res => {
-        this.listData = res.data.data.data
-        this.totalPage = res.data.data.total_page
-        console.log(this.listData)
-        console.log(111)
+        if (res.data.error_code == 0) {
+          this.listData = res.data.data.data
+          this.totalPage = res.data.data.total_page
+          console.log(this.listData)
+        } else {
+          this.loading = false
+          this.finished = true;
+          // console.log(1222)
+        }
+        // console.log(111)
       })
     },
     onLoad() {
@@ -77,10 +86,16 @@ export default {
           pagesize: 2
         }
         this.$axios.post(GOODS_LIST, listParm).then(res => {
-          _this.listData = _this.listData.concat(res.data.data.data)
-          _this.totalPage = res.data.data.total_page
-          _this.loading = false
-          _this.param.page++
+          if (res.data.error_code == 0) {
+            _this.listData = _this.listData.concat(res.data.data.data)
+            _this.totalPage = res.data.data.total_page
+            _this.loading = false
+            _this.param.page++
+          } else {
+            // console.log(1)
+            _this.loading = false
+            _this.finished = true;
+          }
         })
         if (_this.param.page >= _this.totalPage) {
           _this.finished = true;

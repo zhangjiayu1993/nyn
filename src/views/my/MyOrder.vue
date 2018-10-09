@@ -71,6 +71,8 @@ export default {
           this.orderLen = res.data.data.count
           this.orderData = res.data.data.data
         } else {
+          this.loading = false
+          this.finished = true;
           this.$toast(res.data.error_msg)
         }
       })
@@ -84,10 +86,15 @@ export default {
           pagesize: 3
         }
         this.$axios.post(ORDER_LIST, listParm).then(res => {
-          _this.orderData = _this.orderData.concat(res.data.data.data)
-          _this.totalPage = res.data.data.total_page
-          _this.loading = false
-          _this.param.page++
+          if (res.data.error_code == 0) {
+            _this.orderData = _this.orderData.concat(res.data.data.data)
+            _this.totalPage = res.data.data.total_page
+            _this.loading = false
+            _this.param.page++
+          } else {
+            _this.loading = false
+            _this.finished = true;
+          }
         })
         if (_this.param.page >= _this.totalPage) {
           _this.finished = true;

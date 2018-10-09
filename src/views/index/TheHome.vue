@@ -61,7 +61,7 @@ export default {
     },
     setToken() {
       let storage = window.localStorage
-      // let url = window.location.href + 'token=7538c77de67821d57cc125c738f34e0d';
+      // let url = window.location.href + 'token=0d35501dbe96a78fbf368e8ae1bc9089';
       let url = window.location.href;
       let start = url.lastIndexOf('token')
       let TOKEN = ''

@@ -125,6 +125,10 @@ export default {
     },
     // 立即支付
     onSubmit() {
+      // this.$router.push({
+      //   path: '/paysucess',
+      //   name: 'PaySucess'
+      // })
       let addrId = this.addrSelected.id
       let orderId = 0
       if (this.agree) {
@@ -145,7 +149,7 @@ export default {
         if (res.data.error_code === 0) {
           let data = JSON.parse(res.data.data)
           wx.config({
-            debug: true,
+            debug: false,
             appId: data.appId, // 必填，公众号的唯一标识
             timestamp: data.timeStamp, // 必填，生成签名的时间戳
             nonceStr: data.nonceStr, // 必填，生成签名的随机串
@@ -163,19 +167,26 @@ export default {
               signType: data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
               paySign: data.paySign, // 支付签名
               success: function (res) {
-                console.log(res);
+                alert('sucess' + res.errMsg);
                 // 支付成功后的回调函数
-                if (res.err_msg === 'get_brand_wcpay_request:ok') {
-                  this.$router.push({
-                    path: '/paysucess',
-                    name: 'PaySucess'
-                  })
+                // if (res.err_msg === 'get_brand_wcpay_request:ok') {
+                if (res.errMsg === 'chooseWXPay:ok') {
+                  // this.$router.push({
+                  //   path: '/paysucess',
+                  //   name: 'PaySucess'
+                  // })
+                  window.location.href = 'http://meijin.benxiong.org.cn/paysucess'
                 } else {
-                  this.$router.push({
-                    path: '/payfailed',
-                    name: 'PayFailed'
-                  })
+                  // this.$router.push({
+                  //   path: '/payfailed',
+                  //   name: 'PayFailed'
+                  // })
+                  window.location.href = 'http://meijin.benxiong.org.cn/payfailed'
                 }
+              },
+              cancel: function (res) {
+                alert('cancel' + res.errMsg);
+                window.location.href = 'http://meijin.benxiong.org.cn/payfailed'
               }
             })
           });
