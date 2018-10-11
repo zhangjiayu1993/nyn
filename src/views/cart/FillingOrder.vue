@@ -167,7 +167,7 @@ export default {
               signType: data.signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
               paySign: data.paySign, // 支付签名
               success: function (res) {
-                alert('sucess' + res.errMsg);
+                // alert('sucess' + res.errMsg);
                 // 支付成功后的回调函数
                 // if (res.err_msg === 'get_brand_wcpay_request:ok') {
                 if (res.errMsg === 'chooseWXPay:ok') {
@@ -185,7 +185,7 @@ export default {
                 }
               },
               cancel: function (res) {
-                alert('cancel' + res.errMsg);
+                // alert('cancel' + res.errMsg);
                 window.location.href = 'http://meijin.benxiong.org.cn/payfailed'
               }
             })

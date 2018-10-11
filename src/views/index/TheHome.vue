@@ -2,12 +2,9 @@
 <div class="wraper">
   <!--banner-->
   <van-swipe :autoplay="3000" class="banner">
-    <van-swipe-item>
-      <img src="./images/banner.jpg">
+    <van-swipe-item v-for="(list, index) in bannerData" :key="index">
+      <a :href="list.url"><img :src="list.pic"></a>
     </van-swipe-item>
-    <van-swipe-item>2</van-swipe-item>
-    <van-swipe-item>3</van-swipe-item>
-    <van-swipe-item>4</van-swipe-item>
   </van-swipe>
   <!--公司介绍-->
   <div class="gsjs">
@@ -29,7 +26,7 @@
 
 <script>
 import TheFooter from '../../components/TheFooter'
-import { ALL_CATEGORY } from '@/api/api-type'
+import { ALL_CATEGORY, BANNER_LIST } from '@/api/api-type'
 export default {
   name: 'TheHome',
   components: {TheFooter},
@@ -37,6 +34,7 @@ export default {
     return {
       selected: 0,
       categoryData: [],
+      bannerData: [],
       token: window.localStorage.getItem('TOKEN')
     }
   },
@@ -57,6 +55,10 @@ export default {
       this.$axios.post(ALL_CATEGORY, {token: window.localStorage.getItem('TOKEN'), page: 1, pagesize: 10}).then(res => {
         this.categoryData = res.data.data.data
         console.log(this.categoryData)
+      })
+      this.$axios.post(BANNER_LIST).then(res => {
+        this.bannerData = res.data.data
+        console.log(this.bannerData)
       })
     },
     setToken() {
