@@ -153,8 +153,10 @@ export default {
         display: inline-block;
         width: 3.43rem;
         height: 3.43rem;
+        overflow: hidden;
         img{
           width: 100%;
+          height: 100%;
         }
       }
       .title{

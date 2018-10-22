@@ -6,10 +6,13 @@ export const BASE_URL = 'http://mjwhqt.hjw988.com'// base url
 export const GET_RULES = BASE_URL + '/api/getAllRules' // =获取权限
 export const LOGIN = BASE_URL + '/api/login' // 登录接口
 export const GOODS_LIST = BASE_URL + '/api/goods/list' // 商品列表
+export const GOODS_NEWST = BASE_URL + '/api/goods/newest' // 最新商品
+export const GOODS_INDEX = BASE_URL + '/api/goods/index' // 商品推荐
 export const GOODS_DETAIL = BASE_URL + '/api/goods/detail'// 商品详情页
 export const CONTACT = BASE_URL + '/api/contact/add'// 商务合作
 export const INFO_LIST = BASE_URL + '/api/info/list'// 资讯列表
 export const INFO_DETAIL = BASE_URL + '/api/info/detail'// 资讯详情
+export const INFO_INDEX = BASE_URL + '/api/info/index'// 主页咨询
 export const ADDRESS_ADD = BASE_URL + '/api/address/add'// 添加收货地址
 export const ADDRESS_UPDATE = BASE_URL + '/api/address/update'// 修改收货地址
 export const ADDRESS_LIST = BASE_URL + '/api/address/list'// 收货地址列表
