@@ -28,14 +28,14 @@
     <img src="./images/bg.jpg" width="100%">
     <van-swipe :width="200" :show-indicators="false" :loop="false" class="hot-swipe">
       <van-swipe-item v-for="(list, index) in newData" :key="index">
-        <div class="new-good">
+        <router-link tag="div" :to="{path: 'goodsdetail', query: {goodId: list.id}}" class="new-good">
           <div class="img-con">
             <img :src="list.thumb">
           </div>
           <div class="title ellipsis">{{list.title}}</div>
           <div class="description">{{list.desc | subDesc}}</div>
           <div class="price">￥{{list.price}}</div>
-        </div>
+        </router-link >
       </van-swipe-item>
     </van-swipe>
   </div>
@@ -63,7 +63,7 @@
       :immediate-check="immediateCheck"
       @load="onLoad"
     >
-      <div class="jx-de" v-for="(list, index) in indexData" :key="index">
+      <router-link tag="div" :to="{path: 'goodsdetail', query: {goodId: list.id}}" class="jx-de" v-for="(list, index) in indexData" :key="index">
         <div class="new-good">
           <div class="img-con">
             <img :src="list.thumb">
@@ -72,7 +72,7 @@
           <div class="description">{{list.desc | subDesc}}</div>
           <div class="price">￥{{list.price}}</div>
         </div>
-      </div>
+      </router-link>
     </van-list>
   </div>
   <!--页脚-->
