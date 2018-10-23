@@ -220,7 +220,7 @@ export default {
       .pic{
         padding-top: 0.2rem;
         img{
-          width: 0.8rem;
+          width: 1rem;
           height: 1rem;
         }
       }
