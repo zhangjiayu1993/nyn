@@ -71,6 +71,7 @@ export default {
       this.param.token = this.token
       this.$axios.post(CART_LIST, this.param).then(res => {
         if (res.data.error_code == 0) {
+          // console.log(11111)
           this.cartLisLCount = res.data.data.count
           this.$store.state.cartFooterCount = res.data.data.count
           this.cartList = res.data.data.data
@@ -81,6 +82,7 @@ export default {
           }
           this.calcuteTotalPrice()
         } else if (res.data.error_code == 5203) {
+          // console.log(333)
           this.cartLisLCount = 0
           this.$store.state.cartFooterCount = ''
           this.totalPrice = 0
@@ -89,6 +91,7 @@ export default {
             this.isSubmit = true
           }
         } else {
+          // console.log(444)
           this.$toast(res.data.error_msg)
           this.totalPrice = 0
           this.$store.state.cartFooterCount = ''

@@ -40,7 +40,7 @@
     </van-swipe>
   </div>
   <!--双十一特惠-->
-  <div class='index-info-wraper' v-if="infoData.length > 0">
+  <div class='index-info-wraper' v-if="infoDataLength > 0">
     <p class="t-title">双十一特惠</p>
     <van-swipe class="info-index">
       <van-swipe-item v-for="(list, index) in infoData" :key="index">
@@ -54,7 +54,7 @@
     </van-swipe>
   </div>
   <!--为你精选-->
-  <div class="jx-wraper">
+  <div class="jx-wraper" v-if="indexDataLength > 0">
     <img src="./images/bg-2.jpg" width="100%">
     <van-list
       v-model="loading"
@@ -95,7 +95,9 @@ export default {
       bannerData: [],
       newData: [], // 最新商品
       indexData: [], // 商品推荐
+      indexDataLength: 0,
       infoData: [], // 主页咨询
+      infoDataLength: 0,
       token: window.localStorage.getItem('TOKEN'),
       seachVal: '', // 商品搜索关键字
       loading: false,
@@ -138,11 +140,17 @@ export default {
       });
       // 商品推荐
       this.$axios.post(GOODS_INDEX, {page: 1, pagesize: 10}).then(res => {
-        this.indexData = res.data.data.data
+        if (res.data.error_code == 0) {
+          this.indexData = res.data.data.data
+          this.indexDataLength = res.data.data.count
+        }
       });
       // 主页咨询
       this.$axios.post(INFO_INDEX, {page: 1, pagesize: 5}).then(res => {
-        this.infoData = res.data.data.data
+        if (res.data.error_code == 0) {
+          this.infoData = res.data.data.data
+          this.infoDataLength = res.data.data.count
+        }
       });
     },
     setToken() {
