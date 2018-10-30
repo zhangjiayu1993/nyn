@@ -8,6 +8,7 @@ import TheInfo from '@/views/info/TheHome'
 import InfoDetal from '@/views/info/InfoDetail'
 import TheCart from '@/views/cart/TheHome'
 import GoodsList from '@/views/index/GoodsList'
+import SearchGoodsList from '@/views/index/SearchGoodsList'
 import GoodsDetail from '@/views/index/GoodsDetail'
 import AboutUs from '@/views/my/AboutUs'
 import AddContact from '@/views/my/AddContact'
@@ -86,6 +87,14 @@ const router = new Router({
       component: GoodsList,
       meta: {
         title: '商品列表'
+      }
+    },
+    {
+      path: '/searchgoodslist',
+      name: 'SearchGoodsList',
+      component: SearchGoodsList,
+      meta: {
+        title: '商品检索'
       }
     },
     {

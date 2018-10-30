@@ -63,16 +63,18 @@
       :immediate-check="immediateCheck"
       @load="onLoad"
     >
-      <router-link tag="div" :to="{path: 'goodsdetail', query: {goodId: list.id}}" class="jx-de" v-for="(list, index) in indexData" :key="index">
-        <div class="new-good">
-          <div class="img-con">
-            <img :src="list.thumb">
+      <ul class="goods">
+        <router-link tag="li" :to="{path: 'goodsdetail', query: {goodId: list.id}}" class="jx-de" v-for="(list, index) in indexData" :key="index">
+          <div class="new-good">
+            <div class="img-con">
+              <img :src="list.thumb">
+            </div>
+            <div class="title ellipsis">{{list.title}}</div>
+            <div class="description">{{list.desc | subDesc}}</div>
+            <div class="price">￥{{list.price}}</div>
           </div>
-          <div class="title ellipsis">{{list.title}}</div>
-          <div class="description">{{list.desc | subDesc}}</div>
-          <div class="price">￥{{list.price}}</div>
-        </div>
-      </router-link>
+        </router-link>
+      </ul>
     </van-list>
   </div>
   <!--页脚-->
@@ -155,7 +157,19 @@ export default {
       }
     },
     // 搜索商品
-    onSearch() {},
+    onSearch() {
+      if (this.seachVal == '') {
+        return false
+      } else {
+        this.$router.push({
+          path: '/searchgoodslist',
+          query: {
+            seachVal: this.seachVal
+            // isSearch: false
+          }
+        })
+      }
+    },
     onLoad() {
       let _this = this
       setTimeout(() => {
@@ -266,16 +280,22 @@ export default {
   /*为你精选*/
   .jx-wraper{
     margin-top: 15px;
-    .jx-de{
-      width: 94%;
-      margin-left: auto;
-      margin-right: auto;
+    .goods{
       display: -webkit-flex; /* Safari */
       -webkit-justify-content: space-between; /* Safari 6.1+ */
       display: flex;
       justify-content: space-between;
       flex-flow: row wrap;
-      margin-top: 10px;
+      width: 94%;
+      margin-left: auto;
+      margin-right: auto;
+      /*margin-top: 10px;*/
+      .jx-de{
+        background-color: #fff;
+        height: 6rem;
+        width: 3.43rem;
+        margin-bottom: 15px;
+      }
     }
   }
   .new-good{

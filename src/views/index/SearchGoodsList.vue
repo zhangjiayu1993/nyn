@@ -2,7 +2,7 @@
 <div class="content">
   <div class="wraper">
     <div class="categroy-title">
-      <span>{{title}}</span>
+      <!--<span>{{title}}</span>-->
     </div>
     <van-list
       v-model="loading"
@@ -11,7 +11,7 @@
       :immediate-check="immediateCheck"
       @load="onLoad"
     >
-    <ul class="goods">
+    <ul class="goods" v-if="listData.length > 0">
       <router-link tag="li" :to="{path: 'goodsdetail', query: {goodId: list.id}}" class="list" v-for="(list, index) in listData" :key="index">
         <div class="img-con">
           <img :src="list.thumb">
@@ -21,21 +21,22 @@
         <div class="price">￥{{list.price}}</div>
       </router-link>
     </ul>
+      <div v-else class="nodada">~暂无商品~</div>
     </van-list>
   </div>
 </div>
 </template>
 
 <script>
-import { GOODS_LIST } from '@/api/api-type'
+import { GOODS_KEYWORD } from '@/api/api-type'
 export default {
-  name: 'GoodsList',
+  name: 'SearchGoodsList',
   data() {
     return {
       title: this.$route.query.title,
       currentPage: 2,
       param: {
-        category_id: this.$route.query.categoryId,
+        keyword: this.$route.query.seachVal,
         page: 1,
         pagesize: 10
       },
@@ -45,7 +46,9 @@ export default {
       totalPage: 0,
       immediateCheck: false,
       loadingText: '加载中~',
-      list: []
+      list: [],
+      seachVal: this.$route.query.seachVal
+      // isSearch: this.$route.query.isSearch
     }
   },
   created() {
@@ -64,7 +67,7 @@ export default {
   },
   methods: {
     initData(param) {
-      this.$axios.post(GOODS_LIST, param).then(res => {
+      this.$axios.post(GOODS_KEYWORD, param).then(res => {
         if (res.data.error_code == 0) {
           this.listData = res.data.data.data
           this.totalPage = res.data.data.total_page
@@ -81,11 +84,11 @@ export default {
       let _this = this
       setTimeout(() => {
         let listParm = {
-          category_id: _this.$route.query.categoryId,
+          keyword: _this.seachVal,
           page: _this.param.page + 1,
           pagesize: 10
         }
-        this.$axios.post(GOODS_LIST, listParm).then(res => {
+        this.$axios.post(GOODS_KEYWORD, listParm).then(res => {
           if (res.data.error_code == 0) {
             _this.listData = _this.listData.concat(res.data.data.data)
             _this.totalPage = res.data.data.total_page
@@ -183,5 +186,11 @@ export default {
     }
   }
 }
-
+.nodada{
+  text-align: center;
+  line-height: 40px;
+  margin-top: 30px;
+  font-size: 0.28rem;
+  color: #999;
+}
 </style>

@@ -63,7 +63,7 @@ export default {
         name: 'AddressEdit',
         params: item
       })
-      this.$toast('编辑地址:' + index);
+      // this.$toast('编辑地址:' + index);
     },
     onSelect(item, index) {
       this.$router.push({
