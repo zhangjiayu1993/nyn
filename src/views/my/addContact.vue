@@ -25,8 +25,11 @@ export default {
         if (res.data.error_code === 0) {
           _this.content = ''
           _this.mobile = ''
+          this.$toast('提交成功！');
+          _this.$router.push('/my')
+        } else {
+          this.$toast(res.data.error_msg);
         }
-        this.$toast(res.data.error_msg);
       })
     }
   }

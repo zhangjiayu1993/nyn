@@ -113,6 +113,7 @@ export default {
 
 <style lang="less">
 .good-de{
+  padding-bottom: 60px;
   img{
     width: 100%;
   }

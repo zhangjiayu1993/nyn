@@ -26,8 +26,9 @@
   <!--热销商品-->
   <div class="hot-good" v-if="newData.length > 0">
     <img src="./images/bg.jpg" width="100%">
-    <van-swipe :width="200" :show-indicators="false" :loop="false" class="hot-swipe">
-      <van-swipe-item v-for="(list, index) in newData" :key="index">
+    <swiper :options="swiperOption">
+      <!-- slides -->
+      <swiper-slide v-for="(list, index) in newData" :key="index">
         <router-link tag="div" :to="{path: 'goodsdetail', query: {goodId: list.id}}" class="new-good">
           <div class="img-con">
             <img :src="list.thumb">
@@ -36,20 +37,20 @@
           <div class="description">{{list.desc | subDesc}}</div>
           <div class="price">￥{{list.price}}</div>
         </router-link >
-      </van-swipe-item>
-    </van-swipe>
+      </swiper-slide>
+    </swiper>
   </div>
   <!--双十一特惠-->
   <div class='index-info-wraper' v-if="infoDataLength > 0">
-    <p class="t-title">双十一特惠</p>
+    <p class="t-title">热门资讯</p>
     <van-swipe class="info-index">
       <van-swipe-item v-for="(list, index) in infoData" :key="index">
-        <div>
+        <router-link :to="{path: '/infodetail', name: 'InfoDetal', query:{info_id: list.id}}" tag="div">
           <div class="img-con">
             <img :src="list.thumb">
           </div>
           <div class="title">{{list.title | subDesc}}</div>
-        </div>
+        </router-link>
       </van-swipe-item>
     </van-swipe>
   </div>
@@ -84,10 +85,16 @@
 
 <script>
 import TheFooter from '../../components/TheFooter'
+import 'swiper/dist/css/swiper.css'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import { ALL_CATEGORY, BANNER_LIST, GOODS_NEWST, GOODS_INDEX, INFO_INDEX } from '@/api/api-type'
 export default {
   name: 'TheHome',
-  components: {TheFooter},
+  components: {
+    TheFooter,
+    swiper,
+    swiperSlide
+  },
   data() {
     return {
       selected: 0,
@@ -108,6 +115,10 @@ export default {
       param: {
         page: 1,
         pagesize: 6
+      },
+      swiperOption: {
+        slidesPerView: 2,
+        spaceBetween: 20
       }
     }
   },

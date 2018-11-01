@@ -23,14 +23,14 @@
 
 <script>
 // import { mapGetters } from 'vuex'
-// import { CART_LIST } from '@/api/api-type'
+import { CART_LIST } from '@/api/api-type'
 export default {
   name: 'TheFooter',
   data() {
     return {
       message: this.selected,
       token: window.localStorage.getItem('TOKEN'),
-      cartFooterCount: this.$store.state.cartFooterCount
+      cartFooterCount: ''
     }
   },
   props: {
@@ -40,9 +40,12 @@ export default {
   //   'cartFooterCount'
   // ]),
   created() {
-    // this.$axios.post(CART_LIST, {token: this.token, page: 1, pagesize: 2}).then(res => {
-    //   this.$store.state.cartFooterCount = res.data.data.count
-    // })
+    this.$axios.post(CART_LIST, {token: this.token, page: 1, pagesize: 2}).then(res => {
+      // this.$store.state.cartFooterCount = res.data.data.count
+      this.cartFooterCount = res.data.data.count
+    })
+    console.log(this.cartFooterCount)
+    console.log(111)
   }
 }
 </script>
