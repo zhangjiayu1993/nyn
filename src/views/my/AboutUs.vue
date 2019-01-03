@@ -1,8 +1,8 @@
 <template>
 <div class="wraper">
-  <img src="./us.jpg" class="image"/>
   <div class="title">公司简介</div>
-  <div class="detail">公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介公司简介</div>
+  <div class="detail">圆匀和香—由北京美锦文化公司倾心打造，公司已经形成了和香香品研发、生产、香文化培训、香会雅集策划承办等综合性、一体化的香文化产业链。公司旗下的美锦香会馆位于北京大兴区，环境雅致，闹中取静，已成为全国精英雅士心灵归所 </div>
+  <img src="./us.jpg" class="image"/>
 </div>
 </template>
 
@@ -24,6 +24,7 @@ export default {
   padding-top: 10px;
   .image{
     width: 100%;
+    margin-top: 15px;
   }
   .title{
     font-size: 0.36rem;
